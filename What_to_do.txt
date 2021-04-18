@@ -1,0 +1,8 @@
+What To Do
+(0417)
+
+In code :
+- To enable select themes
+- To adjust opacity
+- To add effect sounds
+- To delete PVP
