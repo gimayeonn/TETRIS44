@@ -1,3 +1,0 @@
-# git add ByeongChan.txt
-# git commit -m "add text file"
-# git push 
