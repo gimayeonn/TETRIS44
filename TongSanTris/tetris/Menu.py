@@ -84,8 +84,8 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_show)
         self.menu.add_button('      Single mode      ', self.start_the_game,font_size=self.font_main)
         self.menu.add_button('       MiNi mode       ', self.start_the_Mini,font_size=self.font_main)
+        self.menu.add_button('       Big mode       ', self.start_the_Big,font_size=self.font_main)
         self.menu.add_button('    Twohands mode   ', self.start_the_Twohands,font_size=self.font_main)
-        self.menu.add_button('         Ai mode         ', self.start_the_Ai,font_size=self.font_main)
         self.menu.add_button('           back            ', self.reset,font_size=self.font_main)
 
     def show_rank(self):  ## 랭크 들어가면 나오는 목록들기
@@ -99,6 +99,7 @@ class Menu:
         self.menu.add_button('      Single mode      ', self.Single_the_rank,font_size=self.font_main)
         self.menu.add_button('    Twohands mode   ', self.Twohands_the_rank,font_size=self.font_main)
         self.menu.add_button('       MiNi mode       ', self.Mini_the_rank,font_size=self.font_main)
+        self.menu.add_button('       Big mode       ', self.Big_the_rank,font_size=self.font_main)
         self.menu.add_button('           back            ', self.reset,font_size=self.font_main)
 
 
@@ -174,6 +175,23 @@ class Menu:
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
         self.menu.add_button('back', self.reset,font_size=self.font_sub)
 
+    def Big_the_rank(self):
+        self.page='page8'
+        Var.click.play()
+        self.menu.clear()
+        self.mytheme.widget_margin=self.widget_margin_rank
+        mini_data = self.database.load_data("big")
+        self.menu.add_vertical_margin(self.margin_main)
+        self.menu.add_label("--Big Rank--", selectable=False, font_size=self.font_main)
+        self.menu.add_vertical_margin(self.margin_rank)
+        self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
+        for i in range(Var.rank_max):
+            original_name = str(mini_data[i]['ID'])
+            original_score = '{0:>05s}'.format(str(mini_data[i]['score']))
+            r = "#{} : ".format(i+1) + original_name + "    " + original_score
+            self.menu.add_button(r, self.pass_, font_size=self.font_sub)
+        self.menu.add_button('back', self.reset,font_size=self.font_sub)
+
     def start_the_game(self): # 클릭시 게임 실행 끝나면 기록 화면 보여주기
         Var.click.play()
         self.Mode = 'basic'
@@ -190,6 +208,14 @@ class Menu:
         self.menu.clear()
         self.show_score(self.Mode,self.tetris.Score)
 
+    def start_the_Big(self):
+        Var.click.play()
+        self.Mode = 'big'
+        self.tetris.mode='big'
+        self.tetris.run()
+        self.menu.clear()
+        self.show_score(self.Mode,self.tetris.Score)
+
     def start_the_Twohands(self):
         Var.click.play()
         self.Mode = 'two'
@@ -199,13 +225,6 @@ class Menu:
         self.show_score(self.Mode,self.tetris.Score)
 
 
-
-    def start_the_Ai(self):
-        Var.click.play()
-        self.Mode = 'ai'
-        self.tetris.mode='ai'
-        self.tetris.run()
-        self.reset()
 
     def pass_(self):
         pass
