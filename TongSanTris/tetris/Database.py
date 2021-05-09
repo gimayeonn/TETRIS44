@@ -21,6 +21,8 @@ class Database:
             sql = "select * from twohands_score order by score desc"
         elif game_mode == 'mini':
             sql = "select * from mini_score order by score desc"
+        elif game_mode == 'big':
+            sql = "select * from big_score order by score desc"
         curs.execute(sql)
         data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
         curs.close()
@@ -35,6 +37,8 @@ class Database:
             sql = "INSERT INTO twohands_score (ID, score) VALUES (%s, %s)"
         elif game_mode == 'mini':
             sql = "INSERT INTO mini_score (ID, score) VALUES (%s, %s)"
+        elif game_mode == 'big':
+            sql = "INSERT INTO big_score (ID, score) VALUES (%s, %s)"
         curs.execute(sql, (ID, score))
         self.score_db.commit()  #서버로 추가 사항 보내기
         curs.close()
