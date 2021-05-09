@@ -23,6 +23,7 @@ class Menu:
         self.menu = pygame_menu.Menu(self.h,self.w, '', theme=self.mytheme)
         self.font_main=Var.font_main   # 메인 폰트 사이즈
         self.font_sub=Var.font_sub     # 서브 폰트 사이즈
+        self.widget_margin_login=Var.widget_margin_login       #로그인 위젯 사이 간격
         self.widget_margin_main=Var.widget_margin_main         #메인 위젯 사이 간격
         self.widget_margin_showpage=Var.widget_margin_showpage #show 페이지 위젯 사이 간격
         self.widget_margin_rank=Var.widget_margin_rank         #rank 페이지 위젯 사이 간격
@@ -43,7 +44,7 @@ class Menu:
         print('test2')
         self.page=Var.initial_page   #시작하면 기본 모드로 모드가 설정
         self.menu.clear()
-        self.mytheme.widget_margin=self.widget_margin_main
+        self.mytheme.widget_margin=self.widget_margin_login
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
         self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
@@ -56,7 +57,7 @@ class Menu:
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
         self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page1'
-        self.mytheme.widget_margin=self.widget_margin_main
+        self.mytheme.widget_margin=self.widget_margin_login
         Var.click.play()
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
@@ -71,7 +72,7 @@ class Menu:
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
         self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page0'
-        self.mytheme.widget_margin=self.widget_margin_main
+        self.mytheme.widget_margin=self.widget_margin_login
         Var.click.play()
         self.page=Var.initial_page
         self.menu.clear()
@@ -94,6 +95,7 @@ class Menu:
         self.menu.add_button('   Select mode   ', self.show_game,font_size=self.font_sub)
         self.menu.add_button('    Show Rank    ', self.show_rank,font_size=self.font_sub)
         self.menu.add_button('  Help  ', self.help, font_size=self.font_sub)
+        self.menu.add_button('   Select theme   ',self.change_theme,font_size=self.font_sub)
         self.menu.add_button(' back ', self.login, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
@@ -217,7 +219,7 @@ class Menu:
         self.menu.add_button('back', self.show_list,font_size=self.font_sub)
 
 
-    def help(self): # help 페이
+    def help(self): # help 페이지
         self.page='page10'
         self.surface = pygame.display.set_mode(Var.help_screen)
         self.menu = pygame_menu.Menu(Var.help_h, Var.help_w, '', theme=self.mytheme2)
@@ -260,3 +262,37 @@ class Menu:
 
     def pass_(self):
         pass
+
+    # 테마 선택 코드
+    def change_theme(self):
+        #self.page='page8'
+        self.menu.clear()
+        #menu = Var.menu_image
+        #path = menu.get_path()
+        self.menu.add_button('Yami theme',self.theme_base,font_size=self.font_sub)
+        self.menu.add_button('Black theme',self.theme_black,font_size=self.font_sub)
+        self.menu.add_button('back',self.show_list,font_size=self.font_sub)
+        #self.reset()
+
+    def theme_base(self):
+        Var.menu_image = pygame_menu.baseimage.BaseImage(
+            image_path='assets/images/야미야미 테마.png',
+            drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL	)
+        Var.mytheme.background_color = Var.menu_image
+        Var.mytheme.widget_font_color=Var.MAIN_VIOLET
+        Var.mytheme.widget_font = pygame_menu.font.FONT_NEVIS
+        Var.mytheme_help.background_color = pygame_menu.baseimage.BaseImage(
+            image_path='assets/images/위젯3.png',
+            drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+ 
+
+    def theme_black(self):
+        Var.menu_image = pygame_menu.baseimage.BaseImage(
+            image_path='assets/images/main2.png',
+            drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL	)
+        Var.mytheme.background_color = Var.menu_image
+        Var.mytheme.widget_font_color=Var.DARK_GRAY
+        Var.mytheme.widget_font = pygame_menu.font.FONT_MUNRO
+        Var.mytheme_help.background_color = pygame_menu.baseimage.BaseImage(
+            image_path='assets/images/Keyset2.png',
+            drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)

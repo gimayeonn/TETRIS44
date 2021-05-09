@@ -305,8 +305,9 @@ class Var:
 ##########################################################################################
     ## 메뉴 부분
     ## 메뉴 이미지 추가 부분
+    # 테마명 변경 
     menu_image = pygame_menu.baseimage.BaseImage(
-        image_path='assets/images/메인메뉴2.png',
+        image_path='assets/images/야미야미 테마.png',
         drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL	)
     widget_image = pygame_menu.baseimage.BaseImage(
         image_path='assets/images/메인위젯.png',
@@ -315,8 +316,7 @@ class Var:
         image_path='assets/images/위젯3.png',
         drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
     PATH=os.path.join('assets/images/메인메뉴2.png')
-
-
+    
     #메뉴 기본 테마 만들기
 
     mytheme=pygame_menu.themes.THEME_ORANGE.copy()                  # 메뉴 기본 테마 설정
@@ -346,7 +346,8 @@ class Var:
     # 리사이징 시 변하는 비율 화면과 비례하는 비율
     font_rate_main = 15          #메인 폰트 리사이징 비율
     font_rate_sub = 20           #서브 폰트들 리사이징 비율
-    widget_rate_main = 15        #메인 화면 리젯들 사이 간격 비율
+    widget_rate_login = 15        #로그인 화면 리젯들 사이 간격 비율
+    widget_rate_main = 22        #메인 화면 리젯들 사이 간격 비율
     widget_rate_showpage = 30   #showpage 위젯 간격 비율
     widget_rate_rank = 60       #rank페이지 위젯 간격 비율
     rate_main=6                 #메인 위젯 시작 하는 위치 비율
@@ -354,15 +355,17 @@ class Var:
     rate_rank=30                #rank 위젝 시작 위치 비율
     rate_help=1.25              #help 창 위젯 시작 위치 비율
 
-    help_h=756
-    help_w=756
-    help_screen=(756,756)
+    # 756 -> 600 수정 
+    help_h=600
+    help_w=600
+    help_screen=(600,600)
 
     #폰트 사이즈
     font_main = int((menu_display_h) / font_rate_main)   # 메뉴 기본 폰트 사이즈
     font_sub = int((menu_display_h) / font_rate_sub)     # 메뉴 서브 폰트 사이즈
 
     # 위젯 사이 간격
+    widget_margin_login = (0,int((menu_display_h)/widget_rate_login))         #  로그인 화면
     widget_margin_main = (0,int((menu_display_h)/widget_rate_main))         #  메인 화면
     widget_margin_showpage=(0,int((menu_display_h)/widget_rate_showpage))   #게임 선택 랭킹 선택
     widget_margin_rank=(0,int((menu_display_h)/widget_rate_rank))           # 랭크 보기 화면
@@ -371,4 +374,4 @@ class Var:
     margin_main = int((menu_display_h)/rate_main)   # 메인 화면
     margin_show = int((menu_display_h)/rate_show)   #SHOW 화면
     margin_rank =int((menu_display_h)/rate_rank)    #RANK 화면
-    margin_help=600    #HELP 화면
+    margin_help=500    #HELP 화면
