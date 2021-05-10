@@ -245,7 +245,12 @@ class Var:
     goal_val_loc = 0.65
     combo_loc = 0.75
     combo_val_loc = 0.8
-    time_loc = 0.92
+    # 변경 
+    time_loc = 0.25
+    # 추가
+    char_loc = 0.84
+    char_width = 70
+    char_height = 70
 
     font_size_small = 14    #폰트 사이즈 작은거
     font_size_middle = 16   #중간
