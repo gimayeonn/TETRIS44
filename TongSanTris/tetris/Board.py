@@ -8,9 +8,10 @@ from variable import Var
 class Board:
     # 충돌에러
     COLLIDE_ERROR = Var.error_type
-
+    
     def __init__(self, mode):
         self.mode = mode
+        self.start = time.time() 
 
         if (mode == 'basic'):
             self.width = Var.basic_width  # 맵의 좌에서 우로 사이즈
@@ -66,6 +67,8 @@ class Board:
 
         pygame.event.set_blocked(pygame.MOUSEMOTION)
 
+         
+
     def init_board(self):
         self.board = []
         self.score = Var.initial_score  # 시작 점수
@@ -112,7 +115,7 @@ class Board:
         if (mode == 'mini'):
             self.piece_x, self.piece_y = Var.block_start_mini_x, Var.block_start_y
 
-    def nextpiece2(self):  # 다음에 나올 블럭 그려주
+    def nextpiece2(self):  # 다음에 나올 블럭 그려주기 
         self.piece2 = self.next_piece2
         self.next_piece2 = Piece()
         self.piece_x2, self.piece_y2 = Var.block_start_two_x, Var.block_start_y
@@ -517,8 +520,9 @@ class Board:
 
     # 보드 내 필요한 내용 들 넣어주기
     def draw(self, tetris, mode):
-        now = datetime.datetime.now()
-        nowTime = now.strftime('%H:%M:%S')
+        # 경과 시간 추가
+        sec = round(time.time() - self.start)
+        run_time = datetime.datetime.fromtimestamp(sec).strftime("%M:%S")
         if self.mode == 'basic' or self.mode == 'two' or self.mode == 'mini' or self.mode == 'big':
             self.screen.fill(Var.BLACK)
 
@@ -564,7 +568,7 @@ class Board:
         goal_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_big_in).render('GOAL', True, Var.BLACK)
         goal_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render(str(self.goal), True,
                                                                                                  Var.BLACK)
-        time_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(nowTime), True,
+        time_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(run_time), True,
                                                                                                Var.BLACK)
         # 콤보 값 넣어주기
 
@@ -595,6 +599,14 @@ class Board:
                                        self.block_size * self.height * Var.combo_val_loc))
         self.screen.blit(time_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.time_loc))
+        # 캐릭터 추가
+      
+        tongsan1 = pygame.image.load("assets/images/tongsan1.png")
+        tongsan1 = pygame.transform.scale(tongsan1, (Var.char_width, Var.char_width))
+        self.screen.blit(tongsan1, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+                                     self.block_size * self.height * Var.char_loc))
+        
+        
         #if self.mode == 'ai':
         #    pygame.draw.rect(self.screen, Var.MAIN_VIOLET,
         #                     Rect((self.width * self.block_size + self.display_width / Var.center_divide),
