@@ -8,10 +8,10 @@ from variable import Var
 class Board:
     # 충돌에러
     COLLIDE_ERROR = Var.error_type
-    
+
     def __init__(self, mode):
         self.mode = mode
-        self.start = time.time() 
+        self.start = time.time()
 
         if (mode == 'basic'):
             self.width = Var.basic_width  # 맵의 좌에서 우로 사이즈
@@ -37,6 +37,12 @@ class Board:
             self.block_size = Var.big_block_size  # 바꾸면 맵 블럭크기 변경
             self.status_size = Var.big_status_size
             self.display_width = Var.big_display_width
+        if (mode == "ai"):
+            self.width = Var.ai_width  # 맵의 좌에서 우로 사이즈
+            self.height = Var.ai_height  # 맵 위에서 아래로 사이즈
+            self.block_size = Var.ai_block_size  # 바꾸면 맵 블럭크기 변경
+            self.status_size = Var.ai_status_size
+            self.display_width = Var.ai_display_width
 
         self.display_height = self.height * self.block_size
         self.screen = pygame.display.set_mode((self.display_width, self.display_height), RESIZABLE)
@@ -67,7 +73,7 @@ class Board:
 
         pygame.event.set_blocked(pygame.MOUSEMOTION)
 
-         
+
 
     def init_board(self):
         self.board = []
@@ -115,7 +121,7 @@ class Board:
         if (mode == 'mini'):
             self.piece_x, self.piece_y = Var.block_start_mini_x, Var.block_start_y
 
-    def nextpiece2(self):  # 다음에 나올 블럭 그려주기 
+    def nextpiece2(self):  # 다음에 나올 블럭 그려주기
         self.piece2 = self.next_piece2
         self.next_piece2 = Piece()
         self.piece_x2, self.piece_y2 = Var.block_start_two_x, Var.block_start_y
@@ -366,10 +372,10 @@ class Board:
     def level_speed(self):
         if self.level < Var.max_level:
             pygame.time.set_timer(pygame.USEREVENT, (Var.user_start_speed - Var.user_per_speed * self.level))
-    #        pygame.time.set_timer(Var.ai_event, (Var.AI_start_speed - Var.AI_per_speed * self.level))
+            pygame.time.set_timer(Var.ai_event, (Var.AI_start_speed - Var.AI_per_speed * self.level))
         else:
             pygame.time.set_timer(pygame.USEREVENT, (Var.user_start_speed - Var.user_per_speed * self.level))
-    #        pygame.time.set_timer(Var.ai_event1, (Var.AI_start_speed - Var.AI_per_speed * self.level))
+            pygame.time.set_timer(Var.ai_event1, (Var.AI_start_speed - Var.AI_per_speed * self.level))
 
     def game_over(self):
         return sum(self.board[Var.board_start_y]) > Var.board_die_num or sum(
@@ -471,52 +477,54 @@ class Board:
                     y_pix + self.block_size * Var.next_block_margin_y, self.block_size * Var.next_block_size,
                     self.block_size * Var.next_block_size), Var.line_size)
 
-    ###### AI 관련
-    #def draw_matrix(self, matrix, offset):
-    #    off_x, off_y = offset
-    #    for y, row in enumerate(matrix):
-    #        for x, val in enumerate(row):
-    #            if val:
-    #                pygame.draw.rect(self.screen, Var.colors[val],
-    #                                 pygame.Rect((off_x + x) * self.block_size, (off_y + y) * self.block_size,
-    #                                             self.block_size, self.block_size), Var.ai_matrix_line_size)
+ ###### AI 관련
+    def draw_matrix(self, matrix, offset):
+        off_x, off_y = offset
+        for y, row in enumerate(matrix):
+            for x, val in enumerate(row):
+                if val:
+                    pygame.draw.rect(self.screen, Var.colors[val],
+                                     pygame.Rect((off_x + x) * self.block_size, (off_y + y) * self.block_size,
+                                                 self.block_size, self.block_size), Var.ai_matrix_line_size)
+
 
     ###### AI 관련
     # 블럭을 시계 방향으로 회전하기
-    #def ai_rotate_clockwise(self, shape):  # 회전 시킨 모양 만들어 주기
-    #    return [[shape[y][x]
-    #             for y in range(len(shape))]
-    #            for x in range(len(Var.piece_length(shape)) - Var.for_index_var, Var.search_rotate_next_index,
-    #                           Var.last_rotate_index_prev)]
+    def ai_rotate_clockwise(self, shape):  # 회전 시킨 모양 만들어 주기
+        return [[shape[y][x]
+                 for y in range(len(shape))]
+                for x in range(len(Var.piece_length(shape)) - Var.for_index_var, Var.search_rotate_next_index,
+                               Var.last_rotate_index_prev)]
 
     ###### AI 관련
     # 벽과 부딪히는지 확인하기
-    #def ai_check_collision(self, ai_board, shape, offset):
-    #    off_x, off_y = offset
-    #    for cy, row in enumerate(shape):
-    #        for cx, cell in enumerate(row):
-    #            try:
-    #                if cell and ai_board[cy + off_y][cx + off_x]:
-    #                    return True
-    #            except IndexError:
-    #                return True
-    #    return False
+    def ai_check_collision(self, ai_board, shape, offset):
+        off_x, off_y = offset
+        for cy, row in enumerate(shape):
+            for cx, cell in enumerate(row):
+                try:
+                    if cell and ai_board[cy + off_y][cx + off_x]:
+                        return True
+                except IndexError:
+                    return True
+        return False
 
     ###### AI 관련
     # 행 지우기
-    #def ai_remove_row(self, ai_board, row):
-    #    del ai_board[row]
-    #    return [[Var.board_empty_state for i in range(self.width)]] + ai_board
+    def ai_remove_row(self, ai_board, row):
+        del ai_board[row]
+        return [[Var.board_empty_state for i in range(self.width)]] + ai_board
 
         ###### AI 관련
         # 매트릭스 합치기 (생성된 블럭과 + 배경 보드)에 사용
 
-    #def join_matrixes(self, mat1, mat2, mat2_off):
-    #    off_x, off_y = mat2_off
-    #    for cy, row in enumerate(mat2):
-    #        for cx, val in enumerate(row):
-    #            mat1[cy + off_y - Var.for_index_var][cx + off_x] += val
-    #    return mat1
+    def join_matrixes(self, mat1, mat2, mat2_off):
+        off_x, off_y = mat2_off
+        for cy, row in enumerate(mat2):
+            for cx, val in enumerate(row):
+                mat1[cy + off_y - Var.for_index_var][cx + off_x] += val
+        return mat1
+
 
     # 보드 내 필요한 내용 들 넣어주기
     def draw(self, tetris, mode):
@@ -525,6 +533,8 @@ class Board:
         run_time = datetime.datetime.fromtimestamp(sec).strftime("%M:%S")
         if self.mode == 'basic' or self.mode == 'two' or self.mode == 'mini' or self.mode == 'big':
             self.screen.fill(Var.BLACK)
+        elif self.mode == 'ai':
+            self.screen.fill(Var.GRAY)
 
         for x in range(self.width):
             for y in range(self.height):
@@ -600,66 +610,65 @@ class Board:
         self.screen.blit(time_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.time_loc))
         # 캐릭터 추가
-      
+
         tongsan1 = pygame.image.load("assets/images/tongsan1.png")
         tongsan1 = pygame.transform.scale(tongsan1, (Var.char_width, Var.char_width))
         self.screen.blit(tongsan1, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.char_loc))
-        
-        
-        #if self.mode == 'ai':
-        #    pygame.draw.rect(self.screen, Var.MAIN_VIOLET,
-        #                     Rect((self.width * self.block_size + self.display_width / Var.center_divide),
-        #                          self.ai_start_status_bar_y,
-        #                          (
-        #                                      self.width * self.block_size + self.display_width / Var.center_divide) + self.status_width,
-        #                          self.ai_start_status_bar_y + (self.height * self.block_size)))
 
-        #    ai_score_text = pygame.font.Font('assets/Roboto-Bold.ttf',
-        #                                     self.font_size_big_in).render('SCORE', True, Var.BLACK)  # 점수 글씨
-        #    ai_score_value = pygame.font.Font('assets/Roboto-Bold.ttf',
-        #                                      self.font_size_middle_in).render(str(tetris.ai_score), True,
-        #                                                                       Var.BLACK)  # 점수 표시해주기
 
-        #    self.screen.blit(ai_score_text, (
-        #        (self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
-        #         self.start_status_bar_y + self.block_size * Var.ai_score_text_loc))  # 정해둔 값을 화면에 올리기
-        #    self.screen.blit(ai_score_value, (
-        #        (self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
-        #        self.start_status_bar_y + self.block_size * Var.ai_score_loc))
+        if self.mode == 'ai':
+            pygame.draw.rect(self.screen, Var.MAIN_VIOLET,
+                            Rect((self.width * self.block_size + self.display_width / Var.center_divide),
+                              self.ai_start_status_bar_y,
+                              (
+                                          self.width * self.block_size + self.display_width / Var.center_divide) + self.status_width,
+                               self.ai_start_status_bar_y + (self.height * self.block_size)))
+
+            ai_score_text = pygame.font.Font('assets/Roboto-Bold.ttf',
+                                         self.font_size_big_in).render('SCORE', True, Var.BLACK)  # 점수 글씨
+            ai_score_value = pygame.font.Font('assets/Roboto-Bold.ttf',
+                                          self.font_size_middle_in).render(str(tetris.ai_score), True,
+                                                                           Var.BLACK)  # 점수 표시해주기
+
+            self.screen.blit(ai_score_text, (
+                (self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
+                 self.start_status_bar_y + self.block_size * Var.ai_score_text_loc))  # 정해둔 값을 화면에 올리기
+            self.screen.blit(ai_score_value, (
+                (self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
+                self.start_status_bar_y + self.block_size * Var.ai_score_loc))
 
             #  self.ai_draw_matrix(self.bground_grid, (0,0))   #(0,0) 부터 내가 설정한 격자 그려주기
-        #    self.draw_matrix(tetris.ai_board, (self.width + (self.status_width / self.block_size),
-        #                                       Var.board_start_y))  # (0.0) 부터  보드 업데이트 해주기
-        #    self.draw_matrix(tetris.stone, (tetris.stone_x + self.width + (self.status_width / self.block_size),
-        #                                    tetris.stone_y))  # 테트리스 블럭을 그려준다. 블럭의 왼쪽 끝 좌표부터 - 시작 블럭
+            self.draw_matrix(tetris.ai_board, (self.width + (self.status_width / self.block_size),
+                                               Var.board_start_y))  # (0.0) 부터  보드 업데이트 해주기
+            self.draw_matrix(tetris.stone, (tetris.stone_x + self.width + (self.status_width / self.block_size),
+                                            tetris.stone_y))  # 테트리스 블럭을 그려준다. 블럭의 왼쪽 끝 좌표부터 - 시작 블럭
 
-        #    computer_said1 = pygame.font.Font('assets/Roboto-Bold.ttf',
-        #                                      self.font_size_middle_in).render("YOU CAN'T", True, Var.BLACK)
-        #    computer_said2 = pygame.font.Font('assets/Roboto-Bold.ttf',
-        #                                      self.font_size_middle_in).render("DEFEAT ME", True, Var.BLACK)
+            computer_said1 = pygame.font.Font('assets/Roboto-Bold.ttf',
+                                          self.font_size_middle_in).render("YOU CAN'T", True, Var.BLACK)
+            computer_said2 = pygame.font.Font('assets/Roboto-Bold.ttf',
+                                          self.font_size_middle_in).render("DEFEAT ME", True, Var.BLACK)
 
-        #    self.screen.blit(computer_said1, (
-        #        (
-        #                    self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
-        #        self.start_status_bar_y + self.block_size * Var.ai_said1_loc))
-        #    self.screen.blit(computer_said2, (
-        #        (
-        #                    self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
-        #        self.start_status_bar_y + self.block_size * Var.ai_said2_loc))
+            self.screen.blit(computer_said1, (
+                    (
+                        self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
+                self.start_status_bar_y + self.block_size * Var.ai_said1_loc))
+            self.screen.blit(computer_said2, (
+                (
+                        self.width * self.block_size + self.display_width * Var.ai_display_middle_rate) + self.status_width * Var.ai_text_loc_x,
+                self.start_status_bar_y + self.block_size * Var.ai_said2_loc))
             # 배경에 라인 추가 하기 -> 테트리스 보드 칸을 나눠주는 선 만들기
-        #    for i in range(self.width + Var.for_index_var):
-        #        pygame.draw.line(self.screen, Var.BLACK, (
-        #        (self.block_size) * i + self.display_width * Var.ai_display_middle_rate, Var.board_start_y),
-        #                         ((self.block_size) * i + self.display_width * Var.ai_display_middle_rate,
-        #                          self.display_height - Var.ai_draw_space), Var.ai_line_size)
-        #    for j in range(self.height + Var.for_index_var):
-        #        pygame.draw.line(self.screen, Var.BLACK,
-        #                         (self.display_width * Var.ai_display_middle_rate, (self.block_size) * j),
-        #                         (
-        #                         self.block_size * self.width - Var.ai_draw_space + self.display_width * Var.ai_display_middle_rate,
-        #                         (self.block_size) * j), Var.ai_line_size)
-
+            for i in range(self.width + Var.for_index_var):
+                pygame.draw.line(self.screen, Var.BLACK, (
+                (self.block_size) * i + self.display_width * Var.ai_display_middle_rate, Var.board_start_y),
+                                 ((self.block_size) * i + self.display_width * Var.ai_display_middle_rate,
+                                  self.display_height - Var.ai_draw_space), Var.ai_line_size)
+            for j in range(self.height + Var.for_index_var):
+              pygame.draw.line(self.screen, Var.BLACK,
+                                 (self.display_width * Var.ai_display_middle_rate, (self.block_size) * j),
+                              (
+                             self.block_size * self.width - Var.ai_draw_space + self.display_width * Var.ai_display_middle_rate,
+                             (self.block_size) * j), Var.ai_line_size)
     # 게임 일시정지
     def pause(self):
 
