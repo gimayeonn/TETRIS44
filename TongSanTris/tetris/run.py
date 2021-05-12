@@ -35,24 +35,26 @@ while True:
             if mymenu.page=='page0': #리사이징 후 원래 페이지로 돌아가기
                 mymenu.run()
             elif mymenu.page=='page1':
-                mymenu.login()
+                mymenu.login_page()
             elif mymenu.page=='page2':
-                mymenu.show_list()
+                mymenu.signup_page()
             elif mymenu.page=='page3':
-                mymenu.show_game()
+                mymenu.show_list()
             elif mymenu.page=='page4':
-                mymenu.show_rank()
+                mymenu.show_game()
             elif mymenu.page=='page5':
-                mymenu.show_score(mymenu.Mode, mymenu.tetris.Score)
+                mymenu.show_rank()
             elif mymenu.page=='page6':
-                mymenu.Single_the_rank()
+                mymenu.show_score(mymenu.Mode, mymenu.tetris.Score)
             elif mymenu.page=='page7':
-                mymenu.Twohands_the_rank()
+                mymenu.Single_the_rank()
             elif mymenu.page=='page8':
-                mymenu.Mini_the_rank()
+                mymenu.Twohands_the_rank()
             elif mymenu.page=='page9':
-                mymenu.Big_the_rank()
+                mymenu.Mini_the_rank()
             elif mymenu.page=='page10':
+                mymenu.Big_the_rank()
+            elif mymenu.page=='page11':
                 mymenu.help()
     if mymenu.menu.is_enabled():
         mymenu.menu.update(events)
