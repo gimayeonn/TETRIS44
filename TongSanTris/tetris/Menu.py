@@ -2,7 +2,7 @@ import pygame
 from variable import Var
 import pygame_menu
 from Tetris import *
-from Database import *
+from Database_test import *
 import time
 class Menu:
 
@@ -46,14 +46,25 @@ class Menu:
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_login
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
-        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
-        self.menu.add_button('  Sign Up  ', self.login, font_size=self.font_sub)
-        self.menu.add_button('  Log In  ', self.login, font_size=self.font_sub)
+        self.menu.add_button('  Sign Up  ', self.signup_page, font_size=self.font_sub)
+        self.menu.add_button('  Log In  ', self.login_page, font_size=self.font_sub)
+        self.menu.add_button('        Quit         ', pygame_menu.events.EXIT, font_size=self.font_sub)
+
+    def first_page(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
+        self.page = 'page0'
+        self.mytheme.widget_margin = self.widget_margin_login
+        Var.click.play()
+        self.page = Var.initial_page
+        self.menu.clear()
+        self.menu.add_vertical_margin(self.margin_main)
+        self.menu.add_button('  Sign Up  ', self.signup_page, font_size=self.font_sub)
+        self.menu.add_button('  Log In  ', self.login_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT, font_size=self.font_sub)
 
 
-    def login(self): ##로그인 페이지
+    def login_page(self): ##로그인 페이지
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
         self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page1'
@@ -62,32 +73,40 @@ class Menu:
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
-        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
+        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_password,password=True, password_char='*', font_size=self.font_sub)
         self.menu.add_button('  Log In   ', self.show_list,font_size=self.font_sub)
-        self.menu.add_button('  back  ', self.signup, font_size=self.font_sub)
+        self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
+    def save_id(self,value): #아이디 저장해서 데이터 베이스로 넘기기
+        self.id=value
+        self.database.add_id_data(self.id)
 
-    def signup(self):  ##첫 페이지 회원가입 페이지
+    def save_password(self,value):
+        self.password=value
+        self.database.add_password_data(self.password)
+
+
+    def signup_page(self):  ##첫 페이지 회원가입 페이지
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
         self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
-        self.page='page0'
+        self.page='page2'
         self.mytheme.widget_margin=self.widget_margin_login
         Var.click.play()
-        self.page=Var.initial_page
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
-        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
-        self.menu.add_button('  Sign Up  ', self.login, font_size=self.font_sub)
-        self.menu.add_button('  Log In  ', self.login, font_size=self.font_sub)
+        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id,font_size=self.font_sub)
+        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_password,password=True, password_char='*', font_size=self.font_sub)
+        # 비밀번호를 위에서 입력한 아이디의 비밀번호로 저장해야하는데 onreturn에서 self.save_password()에 아이디랑 비밀번호를 파라미터로 넣어서 하고 싶은데 그게 막힘.
+        self.menu.add_button('  Sign Up  ', self.login_page, font_size=self.font_sub)
+        self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
 
     def show_list(self):  ## 뒤로 갈때 보여줄 목록들
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
         self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
-        self.page='page2'
+        self.page='page3'
         self.mytheme.widget_margin=self.widget_margin_main
         Var.click.play()
         self.menu.clear()
@@ -101,7 +120,7 @@ class Menu:
 
 
     def show_game(self):  ## 게임 목록 들어가면 나오는 목록들
-        self.page='page3'
+        self.page='page4'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_showpage
@@ -115,7 +134,7 @@ class Menu:
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
     def show_rank(self):  ## 랭크 들어가면 나오는 목록들기
-        self.page='page4'
+        self.page='page5'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_showpage
@@ -130,7 +149,7 @@ class Menu:
 
 
     def show_score(self ,game_mode,game_score):  # Rank 기록 하는 페이지
-        self.page='page5'
+        self.page='page6'
         self.Mode=game_mode # 게임 모드 받아오기
         self.score=game_score  # 점수 받아오기
         self.surface=pygame.display.set_mode((self.w,self.h),RESIZABLE)
@@ -140,17 +159,14 @@ class Menu:
         self.menu.add_text_input('ID: ', maxchar=Var.rank_id_max,onreturn=self.save_id,font_size=self.font_main) # 아이디 적는 칸
         self.menu.add_button("Exit",pygame_menu.events.EXIT,font_size=self.font_main)
 
-    def save_id(self ,value): #아이디 저장해서 데이터 베이스로 넘기기
-        self.id=value
-        self.database.add_data(self.Mode,self.id ,self.score)
-        self.show_list()
+
 
     def stop(self):
         Var.click.play()
         self.menu.disable()
 
     def Single_the_rank(self): #기본 모드 랭크 보는 화면
-        self.page='page6'
+        self.page='page7'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
@@ -168,7 +184,7 @@ class Menu:
 
 
     def Twohands_the_rank(self):
-        self.page='page7'
+        self.page='page8'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
@@ -185,7 +201,7 @@ class Menu:
         self.menu.add_button('back', self.show_list,font_size=self.font_sub)
 
     def Mini_the_rank(self):
-        self.page='page8'
+        self.page='page9'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
@@ -202,7 +218,7 @@ class Menu:
         self.menu.add_button('back', self.show_list,font_size=self.font_sub)
 
     def Big_the_rank(self):
-        self.page='page9'
+        self.page='page10'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
@@ -220,7 +236,7 @@ class Menu:
 
 
     def help(self): # help 페이지
-        self.page='page10'
+        self.page='page11'
         self.surface = pygame.display.set_mode(Var.help_screen)
         self.menu = pygame_menu.Menu(Var.help_h, Var.help_w, '', theme=self.mytheme2)
         self.menu.add_vertical_margin(self.margin_help)
