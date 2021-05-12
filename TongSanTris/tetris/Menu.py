@@ -78,12 +78,12 @@ class Menu:
         self.menu.add_button('  Log In   ', self.show_list,font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
-        
-    # 아이디 반환 
+
+    # 아이디 반환
     def get_text(self,value):
         self.id = value
         return self.id
-    
+
     def save_id(self,value): #아이디 저장해서 데이터 베이스로 넘기기
         self.id=value
         self.database.add_id_data(self.id)
@@ -155,16 +155,16 @@ class Menu:
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
 
-    def show_score(self ,game_mode,game_score):  # Rank 기록 하는 페이지
-        self.page='page6'
-        self.Mode=game_mode # 게임 모드 받아오기
-        self.score=game_score  # 점수 받아오기
-        self.surface=pygame.display.set_mode((self.w,self.h),RESIZABLE)
-        self.mytheme.widget_margin=self.widget_margin_main
-        self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_button(self.Mode+' Mode', self.pass_,font_size=self.font_main)
-        self.menu.add_text_input('ID: ', maxchar=Var.rank_id_max,onreturn=self.save_id,font_size=self.font_main) # 아이디 적는 칸
-        self.menu.add_button("Exit",pygame_menu.events.EXIT,font_size=self.font_main)
+    #def show_score(self ,game_mode,game_score):  # Rank 기록 하는 페이지
+    #    self.page='page6'
+    #    self.Mode=game_mode # 게임 모드 받아오기
+    #    self.score=game_score  # 점수 받아오기
+    #    self.surface=pygame.display.set_mode((self.w,self.h),RESIZABLE)
+    #    self.mytheme.widget_margin=self.widget_margin_main
+    #    self.menu.add_vertical_margin(self.margin_main)
+    #    self.menu.add_button(self.Mode+' Mode', self.pass_,font_size=self.font_main)
+    #    self.menu.add_text_input('ID: ', maxchar=Var.rank_id_max,onreturn=self.save_id,font_size=self.font_main) # 아이디 적는 칸
+    #    self.menu.add_button("Exit",pygame_menu.events.EXIT,font_size=self.font_main)
 
 
 
@@ -255,7 +255,8 @@ class Menu:
         self.tetris.mode = 'basic'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Mini(self):
         Var.click.play()
@@ -263,7 +264,8 @@ class Menu:
         self.tetris.mode='mini'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Big(self):
         Var.click.play()
@@ -271,7 +273,8 @@ class Menu:
         self.tetris.mode='big'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Twohands(self):
         Var.click.play()
@@ -279,7 +282,8 @@ class Menu:
         self.tetris.mode='two'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Ai(self):
         Var.click.play()
