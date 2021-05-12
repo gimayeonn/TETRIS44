@@ -40,10 +40,10 @@ class Database:
         curs.close()
 
 
-    def add_password_data(self,user_password):
+    def add_password_data(self,user_password,user_id):
         #추가하기
         curs = self.score_db.cursor()
-        sql = "UPDATE users SET user_password= %s WHERE user_id='aaa'" # 일단 aaa라고 해놨는데 user_id를 받아올 수 있으면 user_id로 바꾸면 가능할듯함.
-        curs.execute(sql,user_password)
+        sql = "UPDATE users SET user_password= %s WHERE user_id=%s" # 일단 aaa라고 해놨는데 user_id를 받아올 수 있으면 user_id로 바꾸면 가능할듯함.
+        curs.execute(sql,(user_password,user_id))
         self.score_db.commit()  #서버로 추가 사항 보내기
         curs.close()
