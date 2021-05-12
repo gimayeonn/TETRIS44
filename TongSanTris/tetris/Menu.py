@@ -31,7 +31,7 @@ class Menu:
         self.margin_show=Var.margin_show                       #show 페이지 x,y 위젯 시작 위치
         self.margin_help=Var.margin_help                       #help 페이지 back 위치
         self.margin_rank=Var.margin_rank                       #rank 페이지 x,y 위젯 시작 위치
-
+        self.id
 
 #add_button 이거는 선택하는 버튼 만들기
 #clear()는 초기화하기
@@ -63,7 +63,6 @@ class Menu:
         self.menu.add_button('  Log In  ', self.login_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT, font_size=self.font_sub)
 
-
     def login_page(self): ##로그인 페이지
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
         self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
@@ -72,19 +71,26 @@ class Menu:
         Var.click.play()
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id, font_size=self.font_sub)
+        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.get_text,
+                                 font_size=self.font_sub)
+        print(self.id)
         self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_password,password=True, password_char='*', font_size=self.font_sub)
         self.menu.add_button('  Log In   ', self.show_list,font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
-
+        
+    # 아이디 반환 
+    def get_text(self,value):
+        self.id = value
+        return self.id
+    
     def save_id(self,value): #아이디 저장해서 데이터 베이스로 넘기기
         self.id=value
         self.database.add_id_data(self.id)
 
     def save_password(self,value):
         self.password=value
-        self.database.add_password_data(self.password)
+        self.database.add_password_data(self.password,self.id)
 
 
     def signup_page(self):  ##첫 페이지 회원가입 페이지
