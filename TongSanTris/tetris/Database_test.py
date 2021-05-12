@@ -23,10 +23,15 @@ class Database:
         #데이터가 튜플 형태라 파라미터로 받아온 id_text와 비교가 안됨 데이터의 value만 추출하는 방법 필요
         self.flag = False
         for i in range(0,len(data)):
-            print(data.__getitem__(i))
+            a = data.__getitem__(i)['user_id']
+            b = id_text
+            print("a : ",a)
+            print("b : ",b)
+            print(a==b)
+            
             if data.__getitem__(i) == id_text:
                 self.flag=True
-        print(self.flag)
+        #print(self.flag)
 
 
 
@@ -37,7 +42,12 @@ class Database:
         curs.execute(sql,(id_text,pw_text))
         data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
         curs.close()
+        print(111)
         for datas in data:
+            print("datas : ",datas)
+            print("data : ",data)
+            print("data['user_id'] : ",data['user_id'])
+            print("pw_text : ",pw_text)
             if datas==pw_text:
                 return True
             else:
