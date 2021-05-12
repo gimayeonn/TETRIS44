@@ -115,7 +115,7 @@ class Menu:
         self.menu.add_button('    Show Rank    ', self.show_rank,font_size=self.font_sub)
         self.menu.add_button('  Help  ', self.help, font_size=self.font_sub)
         self.menu.add_button('   Select theme   ',self.change_theme,font_size=self.font_sub)
-        self.menu.add_button(' back ', self.login, font_size=self.font_sub)
+        self.menu.add_button(' back ', self.login_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
 
@@ -131,6 +131,7 @@ class Menu:
         self.menu.add_button('       MiNi mode       ', self.start_the_Mini,font_size=self.font_sub)
         self.menu.add_button('       Big mode       ', self.start_the_Big,font_size=self.font_sub)
         self.menu.add_button('    Twohands mode   ', self.start_the_Twohands,font_size=self.font_sub)
+        self.menu.add_button('    Ai mode   ', self.start_the_Ai,font_size=self.font_sub)
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
     def show_rank(self):  ## 랭크 들어가면 나오는 목록들기
@@ -274,7 +275,12 @@ class Menu:
         self.menu.clear()
         self.show_score(self.Mode,self.tetris.Score)
 
-
+    def start_the_Ai(self):
+        Var.click.play()
+        self.Mode = 'ai'
+        self.tetris.mode='ai'
+        self.tetris.run()
+        self.show_game()
 
     def pass_(self):
         pass
@@ -300,7 +306,7 @@ class Menu:
         Var.mytheme_help.background_color = pygame_menu.baseimage.BaseImage(
             image_path='assets/images/위젯3.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
- 
+
 
     def theme_black(self):
         Var.menu_image = pygame_menu.baseimage.BaseImage(
