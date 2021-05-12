@@ -33,6 +33,7 @@ class Menu:
         self.margin_rank=Var.margin_rank                       #rank 페이지 x,y 위젯 시작 위치
         self.id
 
+
 #add_button 이거는 선택하는 버튼 만들기
 #clear()는 초기화하기
 #add_vertical_margin 위에서 부터 간격 설정하기
@@ -71,24 +72,34 @@ class Menu:
         Var.click.play()
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.get_text,
-                                 font_size=self.font_sub)
+        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.get_text, font_size=self.font_sub)
+        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.get_text2,password=True, password_char='*', font_size=self.font_sub)
         print(self.id)
-        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_password,password=True, password_char='*', font_size=self.font_sub)
-        self.menu.add_button('  Log In   ', self.show_list,font_size=self.font_sub)
+        print(self.password)
+        self.menu.add_button('  Log In   ', self.login,font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
-    # 아이디 반환
+    def login(self):
+        print(self.id)
+        print(self.password)
+        if self.database.compare_id_data(self.id):
+            self.show_list()
+
+
+    #아이디 입력값
     def get_text(self,value):
         self.id = value
-        return self.id
 
-    def save_id(self,value): #아이디 저장해서 데이터 베이스로 넘기기
+    #비밀번호 입력값
+    def get_text2(self,value):
+        self.password=value
+
+    def save_id(self,value): #아이디 데이터베이스에 저장
         self.id=value
         self.database.add_id_data(self.id)
 
-    def save_password(self,value):
+    def save_password(self,value): #비밀번호 데이터베이스에 저장
         self.password=value
         self.database.add_password_data(self.password,self.id)
 
@@ -103,7 +114,6 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id,font_size=self.font_sub)
         self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_password,password=True, password_char='*', font_size=self.font_sub)
-        # 비밀번호를 위에서 입력한 아이디의 비밀번호로 저장해야하는데 onreturn에서 self.save_password()에 아이디랑 비밀번호를 파라미터로 넣어서 하고 싶은데 그게 막힘.
         self.menu.add_button('  Sign Up  ', self.login_page, font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
