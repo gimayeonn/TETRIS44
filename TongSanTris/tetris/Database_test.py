@@ -12,23 +12,37 @@ class Database:
         )
 
 
-    def load_id_data(self):
+    def compare_id_data(self,id_text):
         #불러 오기
         curs = self.score_db.cursor(pymysql.cursors.DictCursor)
-        sql = "select user_id from users"
+        sql = "SELECT user_id FROM users"
         curs.execute(sql)
         data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
         curs.close()
-        return data
+        print(data)
+        #데이터가 튜플 형태라 파라미터로 받아온 id_text와 비교가 안됨 데이터의 value만 추출하는 방법 필요
+        self.flag = False
+        for i in range(0,len(data)):
+            print(data.__getitem__(i))
+            if data.__getitem__(i) == id_text:
+                self.flag=True
+        print(self.flag)
 
-    def load_password_data(self):
+
+
+    def compare_password_data(self,id_text,pw_text):
         #불러 오기
         curs = self.score_db.cursor(pymysql.cursors.DictCursor)
-        sql = "select user_password from users"
-        curs.execute(sql)
+        sql = "SELECT user_password FROM users WHERE user_id=%s, user_password=%s"
+        curs.execute(sql,(id_text,pw_text))
         data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
         curs.close()
-        return data
+        for datas in data:
+            if datas==pw_text:
+                return True
+            else:
+                return False
+
 
     def add_id_data(self,user_id):
         #추가하기
@@ -43,7 +57,7 @@ class Database:
     def add_password_data(self,user_password,user_id):
         #추가하기
         curs = self.score_db.cursor()
-        sql = "UPDATE users SET user_password= %s WHERE user_id=%s" # 일단 aaa라고 해놨는데 user_id를 받아올 수 있으면 user_id로 바꾸면 가능할듯함.
+        sql = "UPDATE users SET user_password= %s WHERE user_id=%s"
         curs.execute(sql,(user_password,user_id))
         self.score_db.commit()  #서버로 추가 사항 보내기
         curs.close()
