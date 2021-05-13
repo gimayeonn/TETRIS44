@@ -386,3 +386,10 @@ class Var:
     margin_show = int((menu_display_h)/rate_show)   #SHOW 화면
     margin_rank =int((menu_display_h)/rate_rank)    #RANK 화면
     margin_help=500    #HELP 화면
+
+    #캐릭터
+    chick1 = pygame.image.load("assets/images/chick1.png")
+    chick1 = pygame.transform.scale(chick1, (char_width, char_height))
+
+    chick3 = pygame.image.load("assets/images/chick3.png")
+    chick3 = pygame.transform.scale(chick3, (char_width, char_height))
