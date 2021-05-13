@@ -74,15 +74,15 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.get_text, font_size=self.font_sub)
         self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.get_text2,password=True, password_char='*', font_size=self.font_sub)
-        print(self.id)
-        print(self.password)
+        #print(self.id)
+        #print(self.password)
         self.menu.add_button('  Log In   ', self.login,font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
     def login(self):
-        print(self.id)
-        print(self.password)
+        #print(self.id)
+        #print(self.password)
         if self.database.compare_id_data(self.id):
             self.show_list()
 
