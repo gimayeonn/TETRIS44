@@ -33,6 +33,7 @@ class Menu:
         self.margin_rank=Var.margin_rank                       #rank 페이지 x,y 위젯 시작 위치
         self.id
 
+
 #add_button 이거는 선택하는 버튼 만들기
 #clear()는 초기화하기
 #add_vertical_margin 위에서 부터 간격 설정하기
@@ -71,24 +72,34 @@ class Menu:
         Var.click.play()
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.get_text,
-                                 font_size=self.font_sub)
-        print(self.id)
-        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_password,password=True, password_char='*', font_size=self.font_sub)
-        self.menu.add_button('  Log In   ', self.show_list,font_size=self.font_sub)
+        self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.get_text, font_size=self.font_sub)
+        self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.get_text2,password=True, password_char='*', font_size=self.font_sub)
+        #print(self.id)
+        #print(self.password)
+        self.menu.add_button('  Log In   ', self.login,font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
-        
-    # 아이디 반환 
+
+    def login(self):
+        if self.database.compare_data(self.id, self.password):
+            self.show_list()
+        else:
+            self.login_page()
+
+
+    #아이디 입력값
     def get_text(self,value):
         self.id = value
-        return self.id
-    
-    def save_id(self,value): #아이디 저장해서 데이터 베이스로 넘기기
+
+    #비밀번호 입력값
+    def get_text2(self,value):
+        self.password=value
+
+    def save_id(self,value): #아이디 데이터베이스에 저장
         self.id=value
         self.database.add_id_data(self.id)
 
-    def save_password(self,value):
+    def save_password(self,value): #비밀번호 데이터베이스에 저장
         self.password=value
         self.database.add_password_data(self.password,self.id)
 
@@ -103,7 +114,6 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.save_id,font_size=self.font_sub)
         self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.save_password,password=True, password_char='*', font_size=self.font_sub)
-        # 비밀번호를 위에서 입력한 아이디의 비밀번호로 저장해야하는데 onreturn에서 self.save_password()에 아이디랑 비밀번호를 파라미터로 넣어서 하고 싶은데 그게 막힘.
         self.menu.add_button('  Sign Up  ', self.login_page, font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
@@ -155,16 +165,16 @@ class Menu:
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
 
-    def show_score(self ,game_mode,game_score):  # Rank 기록 하는 페이지
-        self.page='page6'
-        self.Mode=game_mode # 게임 모드 받아오기
-        self.score=game_score  # 점수 받아오기
-        self.surface=pygame.display.set_mode((self.w,self.h),RESIZABLE)
-        self.mytheme.widget_margin=self.widget_margin_main
-        self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_button(self.Mode+' Mode', self.pass_,font_size=self.font_main)
-        self.menu.add_text_input('ID: ', maxchar=Var.rank_id_max,onreturn=self.save_id,font_size=self.font_main) # 아이디 적는 칸
-        self.menu.add_button("Exit",pygame_menu.events.EXIT,font_size=self.font_main)
+    #def show_score(self ,game_mode,game_score):  # Rank 기록 하는 페이지
+    #    self.page='page6'
+    #    self.Mode=game_mode # 게임 모드 받아오기
+    #    self.score=game_score  # 점수 받아오기
+    #    self.surface=pygame.display.set_mode((self.w,self.h),RESIZABLE)
+    #    self.mytheme.widget_margin=self.widget_margin_main
+    #    self.menu.add_vertical_margin(self.margin_main)
+    #    self.menu.add_button(self.Mode+' Mode', self.pass_,font_size=self.font_main)
+    #    self.menu.add_text_input('ID: ', maxchar=Var.rank_id_max,onreturn=self.save_id,font_size=self.font_main) # 아이디 적는 칸
+    #    self.menu.add_button("Exit",pygame_menu.events.EXIT,font_size=self.font_main)
 
 
 
@@ -255,7 +265,8 @@ class Menu:
         self.tetris.mode = 'basic'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Mini(self):
         Var.click.play()
@@ -263,7 +274,8 @@ class Menu:
         self.tetris.mode='mini'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Big(self):
         Var.click.play()
@@ -271,7 +283,8 @@ class Menu:
         self.tetris.mode='big'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Twohands(self):
         Var.click.play()
@@ -279,7 +292,8 @@ class Menu:
         self.tetris.mode='two'
         self.tetris.run()
         self.menu.clear()
-        self.show_score(self.Mode,self.tetris.Score)
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
 
     def start_the_Ai(self):
         Var.click.play()

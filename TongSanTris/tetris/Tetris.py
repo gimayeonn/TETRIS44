@@ -41,9 +41,9 @@ class Tetris:
 
             if self.music_on_off:
                 if self.mode == 'ai':
-                    Var.ai_bgm.play()
+                    Var.ai_bgm.play(-1)
                 else:
-                    Var.base_bgm.play()
+                    Var.base_bgm.play(-1)
             else:
                 Var.base_bgm.stop()
                 Var.ai_bgm.stop()
