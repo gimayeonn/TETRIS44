@@ -147,8 +147,20 @@ class Menu:
         self.menu.add_button('       MiNi mode       ', self.start_the_Mini,font_size=self.font_sub)
         self.menu.add_button('       Big mode       ', self.start_the_Big,font_size=self.font_sub)
         self.menu.add_button('    Twohands mode   ', self.start_the_Twohands,font_size=self.font_sub)
-        self.menu.add_button('    Ai mode   ', self.start_the_Ai,font_size=self.font_sub)
+        self.menu.add_button('    Ai mode   ', self.select_Ai,font_size=self.font_sub)
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
+
+    def select_Ai(self):
+        self.page='page12'
+        Var.click.play()
+        self.menu.clear()
+        self.mytheme.widget_margin=self.widget_margin_showpage
+        self.menu.add_vertical_margin(self.margin_main)
+        self.menu.add_label("    --Select--    ",selectable=False,font_size=self.font_main)
+        self.menu.add_vertical_margin(self.margin_show)
+        self.menu.add_button('      Easy mode      ', self.start_the_Ai,font_size=self.font_sub)
+        self.menu.add_button('      Hard mode      ', self.start_the_Ai,font_size=self.font_sub)
+        self.menu.add_button('           back            ', self.show_game,font_size=self.font_sub)
 
     def show_rank(self):  ## 랭크 들어가면 나오는 목록들기
         self.page='page5'
@@ -301,6 +313,7 @@ class Menu:
         self.tetris.mode='ai'
         self.tetris.run()
         self.show_game()
+
 
     def pass_(self):
         pass
