@@ -12,6 +12,8 @@ class Board:
     def __init__(self, mode):
         self.mode = mode
         self.start = time.time()
+        self.character = Var.chick1
+        self.char_time = 0
 
         if (mode == 'basic'):
             self.width = Var.basic_width  # 맵의 좌에서 우로 사이즈
@@ -344,6 +346,10 @@ class Board:
             # 콤보 사운드 할거면 여기
             Var.line_clear.play()
 
+            # 캐릭터 추가
+            self.character = Var.chick3
+            self.char_time = time.time()
+            
             # 라인 삭제 실행
             self.delete_line(y)
             self.combo_null_start()
@@ -611,11 +617,11 @@ class Board:
                                      self.block_size * self.height * Var.time_loc))
         # 캐릭터 추가
 
-        tongsan1 = pygame.image.load("assets/images/tongsan1.png")
-        tongsan1 = pygame.transform.scale(tongsan1, (Var.char_width, Var.char_width))
-        self.screen.blit(tongsan1, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+        self.screen.blit(self.character, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.char_loc))
-
+        if (time.time() - self.char_time) > 1.2 :
+            self.character = Var.chick1
+            
 
         if self.mode == 'ai':
             pygame.draw.rect(self.screen, Var.MAIN_VIOLET,
