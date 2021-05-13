@@ -263,9 +263,9 @@ class Tetris:
         self.gameover = False  # ai 관련
         self.paused = False  # ai 관련
         if self.mode == 'ai':
-            Var.ai_bgm.play()
+            Var.ai_bgm.play(-1)
         else:
-            Var.base_bgm.play()
+            Var.base_bgm.play(-1)
 
         if self.mode == 'ai':
             self.next_stone = Var.ai_tetris_shapes[

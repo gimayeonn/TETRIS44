@@ -56,6 +56,8 @@ while True:
                 mymenu.Big_the_rank()
             elif mymenu.page=='page11':
                 mymenu.help()
+            elif mymenu.page=='page12':
+                mymenu.select_Ai()
     if mymenu.menu.is_enabled():
         mymenu.menu.update(events)
         mymenu.menu.draw(mymenu.surface)
