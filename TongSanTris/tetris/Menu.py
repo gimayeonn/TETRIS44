@@ -81,10 +81,10 @@ class Menu:
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
     def login(self):
-        #print(self.id)
-        #print(self.password)
-        if self.database.compare_id_data(self.id):
+        if self.database.compare_data(self.id, self.password):
             self.show_list()
+        else:
+            self.login_page()
 
 
     #아이디 입력값
