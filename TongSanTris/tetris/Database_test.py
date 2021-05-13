@@ -11,47 +11,38 @@ class Database:
             charset='utf8'
         )
 
+        # def compare_id_data(self,id_text):
+        #     #불러 오기
+        #     curs = self.score_db.cursor(pymysql.cursors.DictCursor)
+        #     sql = "SELECT user_id FROM users"
+        #     curs.execute(sql)
+        #     data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
+        #     curs.close()
+        #     #데이터가 튜플 형태라 파라미터로 받아온 id_text와 비교가 안됨 데이터의 value만 추출하는 방법 필요
+        #     self.flag = False
+        #     for datas in data:
+        #         if datas['user_id']==id_text:
+        #             self.flag=True
+        #         else:
+        #             self.flag=False
+        #     return self.flag
 
-    def compare_id_data(self,id_text):
-        #불러 오기
+    def compare_data(self, id_text, pw_text):
+        # 불러 오기
         curs = self.score_db.cursor(pymysql.cursors.DictCursor)
-        sql = "SELECT user_id FROM users"
+        sql = "SELECT * FROM users "
         curs.execute(sql)
-        data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
+        data = curs.fetchall()  # 리스트 안에 딕셔너리가 있는 형태
         curs.close()
-        print(data)
-        #데이터가 튜플 형태라 파라미터로 받아온 id_text와 비교가 안됨 데이터의 value만 추출하는 방법 필요
         self.flag = False
-        for i in range(0,len(data)):
-            a = data.__getitem__(i)['user_id']
-            b = id_text
-            print("a : ",a)
-            print("b : ",b)
-            print(a==b)
-            
-            if data.__getitem__(i) == id_text:
-                self.flag=True
-        #print(self.flag)
-
-
-
-    def compare_password_data(self,id_text,pw_text):
-        #불러 오기
-        curs = self.score_db.cursor(pymysql.cursors.DictCursor)
-        sql = "SELECT user_password FROM users WHERE user_id=%s, user_password=%s"
-        curs.execute(sql,(id_text,pw_text))
-        data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
-        curs.close()
-        print(111)
         for datas in data:
-            print("datas : ",datas)
-            print("data : ",data)
-            print("data['user_id'] : ",data['user_id'])
-            print("pw_text : ",pw_text)
-            if datas==pw_text:
-                return True
-            else:
-                return False
+            # print(datas['user_id'],datas['user_password'])
+            # print(id_text,pw_text)
+            if datas['user_id'] == id_text:
+                if datas['user_password'] == pw_text:
+                    self.flag = True
+        # print(self.flag)
+        return self.flag
 
 
     def add_id_data(self,user_id):
