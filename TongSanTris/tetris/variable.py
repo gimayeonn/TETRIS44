@@ -158,8 +158,10 @@ class Var:
     goal_zero_state = 0  # 골수가 0이 된 상태
     level_goal_per = 3   #레벨당 목표 goal수
     initial_combo = 0    # 시작 콤보 및 초기화
+    initial_line = 0     # 제거될 라인 수 시작점
     count_combo = 1   #콤보 증가량
-    count_goal = 1    #골수 증갈야
+    count_goal = 1    #골수 증가량
+    count_line = 1    #제거라인 증가량
     initial_block_state= 0  #처음 블럭의 회전 상태
     ai_score_weight = 2     #ai점수 가중치
     board_empty_state = 0 #보드 처음 상태
@@ -237,20 +239,23 @@ class Var:
     next_block2_margin = 0.45 # 두번째 next 블럭 위치 조절 비율
 
     next_loc = 0.05
-    score_loc = 0.3
-    score_val_loc = 0.35
-    level_loc = 0.45
-    level_val_loc = 0.5
-    goal_loc = 0.6
-    goal_val_loc = 0.65
-    combo_loc = 0.75
-    combo_val_loc = 0.8
+    score_loc = 0.32
+    score_val_loc = 0.36
+    level_loc = 0.42
+    level_val_loc = 0.48
+    goal_loc = 0.54
+    goal_val_loc = 0.58
+    combo_loc = 0.64
+    combo_val_loc = 0.68
+    line_loc = 0.74
+    line_val_loc = 0.78
+
     # 변경
     time_loc = 0.25
     # 추가
-    char_loc = 0.84
-    char_width = 70
-    char_height = 70
+    char_loc = 0.82
+    char_width = 80
+    char_height = 80
 
     font_size_small = 14    #폰트 사이즈 작은거
     font_size_middle = 16   #중간
