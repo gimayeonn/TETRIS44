@@ -1,4 +1,5 @@
 import pymysql
+import bcrypt
 
 
 class Database:
@@ -11,38 +12,28 @@ class Database:
             charset='utf8'
         )
 
-        # def compare_id_data(self,id_text):
-        #     #불러 오기
-        #     curs = self.score_db.cursor(pymysql.cursors.DictCursor)
-        #     sql = "SELECT user_id FROM users"
-        #     curs.execute(sql)
-        #     data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
-        #     curs.close()
-        #     #데이터가 튜플 형태라 파라미터로 받아온 id_text와 비교가 안됨 데이터의 value만 추출하는 방법 필요
-        #     self.flag = False
-        #     for datas in data:
-        #         if datas['user_id']==id_text:
-        #             self.flag=True
-        #         else:
-        #             self.flag=False
-        #     return self.flag
-
     def compare_data(self, id_text, pw_text):
         # 불러 오기
         curs = self.score_db.cursor(pymysql.cursors.DictCursor)
-        sql = "SELECT * FROM users "
-        curs.execute(sql)
+        sql = "SELECT * FROM users WHERE user_id=%s"
+        curs.execute(sql,id_text)
         data = curs.fetchall()  # 리스트 안에 딕셔너리가 있는 형태
         curs.close()
-        self.flag = False
-        for datas in data:
-            # print(datas['user_id'],datas['user_password'])
-            # print(id_text,pw_text)
-            if datas['user_id'] == id_text:
-                if datas['user_password'] == pw_text:
-                    self.flag = True
+        print(data[0])
+        user_data=data[0]
+        self.is_same=bcrypt.checkpw(pw_text.encode('utf-8'),user_data['user_password'].encode('utf-8'))
+        print(self.is_same)
+        return self.is_same
+
+        # for datas in data:
+        #     if datas['user_id'] == id_text:
+        #         self.is_same=bcrypt.checkpw(pw_text.encode('utf-8'),datas['user_password'].encode('utf-8'))
+        #         print(self.is_same)
+        #         if self.is_same:
+        #             self.flag = True
         # print(self.flag)
-        return self.flag
+        # return self.flag
+
 
 
     def add_id_data(self,user_id):
@@ -57,8 +48,12 @@ class Database:
 
     def add_password_data(self,user_password,user_id):
         #추가하기
+        new_salt=bcrypt.gensalt()
+        new_password=user_password.encode('utf-8')
+        hashed_password=bcrypt.hashpw(new_password,new_salt)
+        decode_hash_pw=hashed_password.decode('utf-8')
         curs = self.score_db.cursor()
         sql = "UPDATE users SET user_password= %s WHERE user_id=%s"
-        curs.execute(sql,(user_password,user_id))
+        curs.execute(sql,(decode_hash_pw,user_id))
         self.score_db.commit()  #서버로 추가 사항 보내기
         curs.close()
