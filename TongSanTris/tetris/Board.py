@@ -82,6 +82,7 @@ class Board:
         self.score = Var.initial_score  # 시작 점수
         self.level = Var.initial_level  # 시작 level
         self.goal = Var.level_goal_per  # level up 도달 목표 a
+        self.line = Var.initial_line    # 제거한 라인 수
 
         self.combo = Var.initial_combo  # combo 수
         self.timer0 = threading.Timer(Var.combo_reset_time, self.combo_null)
@@ -349,12 +350,14 @@ class Board:
             # 캐릭터 추가
             self.character = Var.chick3
             self.char_time = time.time()
-            
+
             # 라인 삭제 실행
             self.delete_line(y)
             self.combo_null_start()
             # 라인 삭제시 콤보 점수 1 증가
             self.combo += Var.count_combo
+            # 라인 삭제시 제거된 라인 1 증가
+            self.line += Var.count_line
 
             # 콤보 *level * 10 만큼 점수 올려주기
             self.score += self.level * self.combo * Var.combo_score_rate
@@ -532,7 +535,7 @@ class Board:
         return mat1
 
 
-    # 보드 내 필요한 내용 들 넣어주기
+    # 보드 내 필요한 내용들 넣어주기
     def draw(self, tetris, mode):
         # 경과 시간 추가
         sec = round(time.time() - self.start)
@@ -574,23 +577,28 @@ class Board:
         if self.mode == 'two':
             self.draw_next_piece2(self.next_piece2)
 
-        next_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_big_in).render('NEXT', True, Var.BLACK)
-        score_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_big_in).render('SCORE', True, Var.BLACK)
-        score_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render(str(self.score), True,
-                                                                                                  Var.BLACK)
-        level_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_big_in).render('LEVEL', True, Var.BLACK)
-        level_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render(str(self.level), True,
-                                                                                                  Var.BLACK)
-        goal_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_big_in).render('GOAL', True, Var.BLACK)
-        goal_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render(str(self.goal), True,
-                                                                                                 Var.BLACK)
+        next_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('NEXT', True, Var.BLACK)
+        score_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('SCORE', True, Var.BLACK)
+        score_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.score), True,
+                                                                                                  Var.w_pink)
+        level_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('LEVEL', True, Var.BLACK)
+        level_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.level), True,
+                                                                                                  Var.DARK_GRAY)
+        goal_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('GOAL', True, Var.BLACK)
+        goal_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.goal), True,
+                                                                                                 Var.DARK_GRAY)
         time_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(run_time), True,
-                                                                                               Var.BLACK)
+                                                                                               Var.GRAY)
         # 콤보 값 넣어주기
 
-        combo_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_big_in).render('COMBO', True, Var.BLACK)
-        combo_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render(str(self.combo), True,
-                                                                                                  Var.BLACK)
+        combo_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('COMBO', True, Var.BLACK)
+        combo_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.combo), True,
+                                                                                                  Var.DARK_GRAY)
+
+        # 제거한 라인의 개수
+        line_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('LINES', True, Var.BLACK)
+        line_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.line), True,
+                                                                                                  Var.DARK_GRAY)
 
         self.screen.blit(next_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.next_loc))
@@ -608,11 +616,16 @@ class Board:
                                      self.block_size * self.height * Var.goal_loc))
         self.screen.blit(goal_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                       self.block_size * self.height * Var.goal_val_loc))
-        # 콤보 화며면에 표시
+
+        # 콤보 화면에 표시
         self.screen.blit(combo_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                       self.block_size * self.height * Var.combo_loc))
         self.screen.blit(combo_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                        self.block_size * self.height * Var.combo_val_loc))
+        self.screen.blit(line_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+                                     self.block_size * self.height * Var.line_loc))
+        self.screen.blit(line_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+                                      self.block_size * self.height * Var.line_val_loc))
         self.screen.blit(time_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.time_loc))
         # 캐릭터 추가
@@ -621,7 +634,7 @@ class Board:
                                      self.block_size * self.height * Var.char_loc))
         if (time.time() - self.char_time) > 1.2 :
             self.character = Var.chick1
-            
+
 
         if self.mode == 'ai':
             pygame.draw.rect(self.screen, Var.MAIN_VIOLET,

@@ -147,7 +147,7 @@ class Menu:
         self.menu.add_button('       MiNi mode       ', self.start_the_Mini,font_size=self.font_sub)
         self.menu.add_button('       Big mode       ', self.start_the_Big,font_size=self.font_sub)
         self.menu.add_button('    Twohands mode   ', self.start_the_Twohands,font_size=self.font_sub)
-        self.menu.add_button('    Ai mode   ', self.select_Ai,font_size=self.font_sub)
+        self.menu.add_button('    vs Computer   ', self.select_Ai,font_size=self.font_sub)
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
     def select_Ai(self):
