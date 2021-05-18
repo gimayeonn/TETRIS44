@@ -2,6 +2,7 @@ import pygame
 import pygame_menu
 import random
 import os
+
 class Var:
     pygame.mixer.init()
 
@@ -253,9 +254,9 @@ class Var:
     # 변경
     time_loc = 0.25
     # 추가
-    char_loc = 0.82
-    char_width = 80
-    char_height = 80
+    char_loc = 0.8
+    char_width = 100
+    char_height = 100
 
     font_size_small = 14    #폰트 사이즈 작은거
     font_size_middle = 16   #중간
@@ -336,7 +337,9 @@ class Var:
     #메뉴 기본 테마 만들기
 
     mytheme=pygame_menu.themes.THEME_ORANGE.copy()                  # 메뉴 기본 테마 설정
-    mytheme.widget_font_color=MAIN_VIOLET                         # 메뉴 위젯 폰트 컬러
+    mytheme.widget_font_color=MAIN_VIOLET
+
+    # 메뉴 위젯 폰트 컬러
     mytheme.background_color = menu_image                           # 메뉴 배경 설정
     #mytheme.widget_background_color = widget_image                 # 메뉴 위젯 배경 설정
     mytheme.title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_NONE  # 메뉴 타이틀 바 모양 설정
@@ -392,9 +395,37 @@ class Var:
     margin_rank =int((menu_display_h)/rate_rank)    #RANK 화면
     margin_help=500    #HELP 화면
 
-    #캐릭터
-    chick1 = pygame.image.load("assets/images/chick1.png")
-    chick1 = pygame.transform.scale(chick1, (char_width, char_height))
+    #캐릭터 (데이터베이스에서 계정마다 "레벨", "캐릭터" 정보 받아오기)
 
-    chick3 = pygame.image.load("assets/images/chick3.png")
-    chick3 = pygame.transform.scale(chick3, (char_width, char_height))
+    path = "assets/images/"
+    global char1_lst
+    char1_lst = [[path+"ele1-1.png",path+"ele1-2.png"],
+                 [path+"ele2-1.png",path+"ele2-2.png"],
+                 [path+"ele3-1.png",path+"ele3-2.png"]]
+    # char2_lst
+    # char3_lst
+    
+    # level 받아오기
+    level = 3
+    char = 1
+
+
+    
+    def defineChar(char):
+        if char==1:
+            return char1_lst
+        elif char==2:
+            return char2_lst
+        else:
+            return char3_lst
+    
+    char_basic = pygame.transform.scale(pygame.image.load(defineChar(char)[level-1][0]),
+                                        (char_width,char_height))
+
+    char_lineclear = pygame.transform.scale(pygame.image.load(defineChar(char)[level-1][1]),
+                                        (char_width,char_height))
+
+
+
+    theme_num=1
+    

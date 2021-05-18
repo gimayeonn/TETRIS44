@@ -12,7 +12,7 @@ class Board:
     def __init__(self, mode):
         self.mode = mode
         self.start = time.time()
-        self.character = Var.chick1
+        self.character = Var.char_basic
         self.char_time = 0
 
         if (mode == 'basic'):
@@ -348,7 +348,7 @@ class Board:
             Var.line_clear.play()
 
             # 캐릭터 추가
-            self.character = Var.chick3
+            self.character = Var.char_lineclear
             self.char_time = time.time()
 
             # 라인 삭제 실행
@@ -564,10 +564,21 @@ class Board:
             self.draw_blocks2(self.piece2, dx=self.piece_x2, dy=self.piece_y2)
 
         self.draw_blocks(self.board)
-        pygame.draw.rect(self.screen, Var.MAIN_VIOLET, Rect((self.width * self.block_size), self.start_status_bar_y,
+
+
+        # 테마에 따라 게임 내 메뉴바 색깔 변경
+        rect_color1 = 0
+        rect_color2 = 0
+        if Var.theme_num==1:
+            rect_color1 = Var.MAIN_VIOLET
+            rect_color2 = Var.MAIN_YELLOW
+        elif Var.theme_num==2:
+            rect_color1 = Var.DARK_GRAY
+            rect_color2 = Var.WHITE
+        pygame.draw.rect(self.screen, rect_color1, Rect((self.width * self.block_size), self.start_status_bar_y,
                                                             self.block_size * self.status_size,
                                                             (self.height * self.block_size)))
-        pygame.draw.rect(self.screen, Var.MAIN_YELLOW, Rect(((self.width + Var.rect2_margin) * self.block_size),
+        pygame.draw.rect(self.screen, rect_color2, Rect(((self.width + Var.rect2_margin) * self.block_size),
                                                             self.start_status_bar_y + self.block_size / Var.center_divide,
                                                             self.block_size * (
                                                                         self.status_size - Var.rect2_margin_double),
@@ -633,7 +644,7 @@ class Board:
         self.screen.blit(self.character, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.char_loc))
         if (time.time() - self.char_time) > 1.2 :
-            self.character = Var.chick1
+            self.character = Var.char_basic
 
 
         if self.mode == 'ai':
@@ -718,9 +729,17 @@ class Board:
     def show_my_score(self):
         pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h))
         fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', Var.myscore_font)
-        textSurfaceObj = fontObj.render('My Score : ' + str(self.score), True, Var.MAIN_YELLOW)
+
+        if Var.theme_num==1:
+            screen_color = Var.MAIN_VIOLET_W
+            font_color = Var.MAIN_YELLOW
+        elif Var.theme_num==2:
+            screen_color = Var.DARK_GRAY
+            font_color = Var.WHITE
+        
+        textSurfaceObj = fontObj.render('My Score : ' + str(self.score), True, font_color)
         textRectObj = textSurfaceObj.get_rect()
-        self.screen.fill(Var.MAIN_VIOLET_W)
+        self.screen.fill(screen_color)
         self.screen.blit(textSurfaceObj, Var.myscore_display)
         running = True
         while running:
