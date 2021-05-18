@@ -14,28 +14,20 @@ class Database:
 
     def compare_data(self, id_text, pw_text):
         # 불러 오기
+        print(pw_text)
+        input_password=pw_text.encode('utf-8')
         curs = self.score_db.cursor(pymysql.cursors.DictCursor)
         sql = "SELECT * FROM users WHERE user_id=%s"
         curs.execute(sql,id_text)
-        data = curs.fetchall()  # 리스트 안에 딕셔너리가 있는 형태
+        data = curs.fetchone()  # 리스트 안에 딕셔너리가 있는 형태
         curs.close()
-        print(data[0])
-        #user_data=data[0]
-        #self.is_same=bcrypt.checkpw(pw_text.encode('utf-8'),user_data['user_password'].encode('utf-8'))
-        #print(self.is_same)
-        #return self.is_same
-
-        return True
-
-        # for datas in data:
-        #     if datas['user_id'] == id_text:
-        #         self.is_same=bcrypt.checkpw(pw_text.encode('utf-8'),datas['user_password'].encode('utf-8'))
-        #         print(self.is_same)
-        #         if self.is_same:
-        #             self.flag = True
-        # print(self.flag)
-        # return self.flag
-
+        print(input_password)
+        print(data)
+        print(data['user_password'].encode('utf-8'))
+        check_password=bcrypt.checkpw(input_password,data['user_password'].encode('utf-8'))
+        print(check_password)
+        return check_password
+        # return True
 
 
     def add_id_data(self,user_id):
