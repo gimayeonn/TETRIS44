@@ -327,7 +327,8 @@ class Menu:
         self.menu.add_button('Yami theme',self.theme_base,font_size=self.font_sub)
         self.menu.add_button('Black theme',self.theme_black,font_size=self.font_sub)
         self.menu.add_button('back',self.show_list,font_size=self.font_sub)
-        #self.reset()
+
+        
 
     def theme_base(self):
         Var.menu_image = pygame_menu.baseimage.BaseImage(
@@ -351,3 +352,6 @@ class Menu:
         Var.mytheme_help.background_color = pygame_menu.baseimage.BaseImage(
             image_path='assets/images/Keyset2.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
+        Var.mytheme=pygame_menu.themes.THEME_BLUE.copy
+        Var.theme_num=2       
+
