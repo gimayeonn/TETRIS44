@@ -20,12 +20,8 @@ class Database:
         curs.execute(sql,id_text)
         data = curs.fetchone()  # 리스트 안에 딕셔너리가 있는 형태
         curs.close()
-        # print(input_password)
-        # print(data['user_password'].encode('utf-8'))
-        # check_password=bcrypt.checkpw(input_password,data['user_password'].encode('utf-8'))
-        # print(check_password)
-        # return check_password
-        return True
+        check_password=bcrypt.checkpw(input_password,data['user_password'].encode('utf-8'))
+        return check_password
 
 
     def add_id_data(self,user_id):
@@ -49,7 +45,3 @@ class Database:
         curs.execute(sql,(decode_hash_pw,user_id))
         self.score_db.commit()  #서버로 추가 사항 보내기
         curs.close()
-        test_pw=user_password
-        print(test_pw.encode('utf-8'))
-        print(decode_hash_pw)
-        print(bcrypt.checkpw(test_pw.encode('utf-8'),decode_hash_pw.encode('utf-8')))
