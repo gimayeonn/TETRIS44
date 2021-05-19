@@ -131,6 +131,7 @@ class Menu:
         self.menu.add_button('    Show Rank    ', self.show_rank,font_size=self.font_sub)
         self.menu.add_button('  Help  ', self.help, font_size=self.font_sub)
         self.menu.add_button('   Select theme   ',self.change_theme,font_size=self.font_sub)
+        self.menu.add_button('   Select BGM   ',self.change_base_bgm,font_size=self.font_sub)
         self.menu.add_button(' back ', self.login_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
@@ -328,7 +329,7 @@ class Menu:
         self.menu.add_button('Black theme',self.theme_black,font_size=self.font_sub)
         self.menu.add_button('back',self.show_list,font_size=self.font_sub)
 
-        
+
 
     def theme_base(self):
         Var.menu_image = pygame_menu.baseimage.BaseImage(
@@ -353,5 +354,21 @@ class Menu:
             image_path='assets/images/Keyset2.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
         Var.mytheme=pygame_menu.themes.THEME_BLUE.copy
-        Var.theme_num=2       
+        Var.theme_num=2
 
+
+    # bgm 선택 코드
+    def change_base_bgm(self):
+        self.menu.clear()
+        self.menu.add_button('BGM 1',self.theme_base,font_size=self.font_sub)
+        self.menu.add_button('BGM 2',self.theme_black,font_size=self.font_sub)
+        self.menu.add_button('back',self.show_list,font_size=self.font_sub)
+
+    def bgm1(self):
+        Var.base_bgm = pygame.mixer.Sound('assets/sounds/base_sound.wav')
+        base_bgm.set_volume(0.1)
+
+
+    def bgm2(self):
+        Var.base_bgm2 = pygame.mixer.Sound('assets/sounds/base_sound_2.wav')
+        base_bgm2.set_volume(0.1)

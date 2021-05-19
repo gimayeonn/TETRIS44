@@ -736,7 +736,7 @@ class Board:
         elif Var.theme_num==2:
             screen_color = Var.DARK_GRAY
             font_color = Var.WHITE
-        
+
         textSurfaceObj = fontObj.render('My Score : ' + str(self.score), True, font_color)
         textRectObj = textSurfaceObj.get_rect()
         self.screen.fill(screen_color)
