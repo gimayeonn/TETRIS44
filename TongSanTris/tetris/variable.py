@@ -215,10 +215,11 @@ class Var:
     ai_said1_loc = 1
     ai_said2_loc = 2
 
-    user_start_speed = 600  #유저의 시작 스피드(몇초에 한번 이벤트가 진행되는가)
-    AI_start_speed = int(user_start_speed / 2)   #ai의 시작 스피드
+    user_start_speed = 700  #유저의 시작 스피드(몇초에 한번 이벤트가 진행되는가)
+    user_start_speed_hard = 300
+    AI_start_speed = int(user_start_speed / 1.2)   #ai의 시작 스피드
     user_per_speed = 40   #레벨에 따른 유저의 속도 증가
-    AI_per_speed = int(user_per_speed / 2)  #레벨에 따른 ai의 속도 증가
+    AI_per_speed = int(user_per_speed / 1.2)  #레벨에 따른 ai의 속도 증가
 
     combo_max=9
     combo_reset=0
@@ -270,10 +271,12 @@ class Var:
     block_start_basic_x = 3  #몇번 쨰 칸에서 블럭이 시작 하는가
     block_start_two_x = 12
     block_start_mini_x = 0
+    block_start_big_x = 7
     block_start_y = -2
 
+
     combo_score_rate = 10  #콤보에 따른 점수 가중치
-    level_score_rate = 10  # 레벨에 따른 점수 가중치
+    level_score_rate = 10  #레벨에 따른 점수 가중치
     max_level = 10         #최대 레벨
 
     menu_display_w = 600  # 메뉴 시작시 처음 가로 크기
