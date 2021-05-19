@@ -17,6 +17,8 @@ class Database:
         curs = self.score_db.cursor(pymysql.cursors.DictCursor)
         if game_mode == 'basic':
             sql = "select * from original_score order by score desc "
+        elif game_mode == 'hard':
+            sql = "select * from hard_score order by score desc "
         elif game_mode == 'two':
             sql = "select * from twohands_score order by score desc"
         elif game_mode == 'mini':
@@ -33,6 +35,8 @@ class Database:
         curs = self.score_db.cursor()
         if game_mode == 'basic':
             sql = "INSERT INTO original_score (ID, score) VALUES (%s, %s)"
+        elif game_mode == 'hard':
+            sql = "INSERT INTO hard_score (ID, score) VALUES (%s, %s)"
         elif game_mode == 'two':
             sql = "INSERT INTO twohands_score (ID, score) VALUES (%s, %s)"
         elif game_mode == 'mini':

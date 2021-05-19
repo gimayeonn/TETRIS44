@@ -21,6 +21,12 @@ class Board:
             self.block_size = Var.basic_block_size  # 바꾸면 맵 블럭크기 변경
             self.status_size = Var.basic_status_size
             self.display_width = Var.basic_display_width
+        if (mode == 'hard'):
+            self.width = Var.basic_width  # 맵의 좌에서 우로 사이즈
+            self.height = Var.basic_height  # 맵 위에서 아래로 사이즈
+            self.block_size = Var.basic_block_size  # 바꾸면 맵 블럭크기 변경
+            self.status_size = Var.basic_status_size
+            self.display_width = Var.basic_display_width
         if (mode == 'mini'):
             self.width = Var.mini_width  # 맵의 좌에서 우로 사이즈
             self.height = Var.mini_height  # 맵 위에서 아래로 사이즈
@@ -104,11 +110,12 @@ class Board:
         self.piece = Piece()
         self.next_piece = Piece()
 
-        if (mode == 'basic' or 'two' or 'ai'):
+        if (mode == 'basic' or 'hard' or 'two' or 'ai'):
             self.piece_x, self.piece_y = Var.block_start_basic_x, Var.block_start_y
-
         if (mode == 'mini'):
             self.piece_x, self.piece_y = Var.block_start_mini_x, Var.block_start_y
+        if (mode == 'big'):
+            self.piece_x, self.piece_y = Var.block_start_big_x, Var.block_start_y
 
     def generate_piece2(self):
         self.piece2 = Piece()
@@ -119,10 +126,12 @@ class Board:
         self.piece = self.next_piece
         self.next_piece = Piece()
 
-        if (mode == 'basic' or 'two' or 'ai'):
+        if (mode == 'basic' or 'hard' or 'two' or 'ai'):
             self.piece_x, self.piece_y = Var.block_start_basic_x, Var.block_start_y
         if (mode == 'mini'):
             self.piece_x, self.piece_y = Var.block_start_mini_x, Var.block_start_y
+        if (mode == 'big'):
+            self.piece_x, self.piece_y = Var.block_start_big_x, Var.block_start_y
 
     def nextpiece2(self):  # 다음에 나올 블럭 그려주기
         self.piece2 = self.next_piece2
@@ -359,10 +368,22 @@ class Board:
             # 라인 삭제시 제거된 라인 1 증가
             self.line += Var.count_line
 
-            # 콤보 *level * 10 만큼 점수 올려주기
-            self.score += self.level * self.combo * Var.combo_score_rate
-            # level * 10 만큼 점수 올려주기
-            self.score += Var.level_score_rate * self.level
+            #모드별 score 다르게 측정 (수정중 ㅠㅠ)
+            if self.mode == 'hard':
+                self.score_hard += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+                self.score_hard += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+            elif self.mode == 'mini':
+                self.score_mini += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+                self.score_mini += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+            elif self.mode == 'big':
+                self.score_big += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+                self.score_big += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+            else:
+                self.score += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+                self.score += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+
+
+
             # level up까지 목표 골수 1만큼 내려주기
             self.goal -= Var.count_goal
 
@@ -380,8 +401,12 @@ class Board:
 
     def level_speed(self):
         if self.level < Var.max_level:
-            pygame.time.set_timer(pygame.USEREVENT, (Var.user_start_speed - Var.user_per_speed * self.level))
-            pygame.time.set_timer(Var.ai_event, (Var.AI_start_speed - Var.AI_per_speed * self.level))
+            if self.mode == 'ai':
+                pygame.time.set_timer(Var.ai_event, (Var.AI_start_speed - Var.AI_per_speed * self.level))
+            elif self.mode == 'hard':
+                pygame.time.set_timer(pygame.USEREVENT, (Var.user_start_speed_hard - Var.user_per_speed * self.level))
+            else:
+                pygame.time.set_timer(pygame.USEREVENT, (Var.user_start_speed - Var.user_per_speed * self.level))
         else:
             pygame.time.set_timer(pygame.USEREVENT, (Var.user_start_speed - Var.user_per_speed * self.level))
             pygame.time.set_timer(Var.ai_event1, (Var.AI_start_speed - Var.AI_per_speed * self.level))

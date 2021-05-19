@@ -144,14 +144,14 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_label("    --Start game--    ",selectable=False,font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_show)
-        self.menu.add_button('      Single mode      ', self.start_the_game,font_size=self.font_sub)
+        self.menu.add_button('      Single mode      ', self.select_single,font_size=self.font_sub)
         self.menu.add_button('       MiNi mode       ', self.start_the_Mini,font_size=self.font_sub)
         self.menu.add_button('       Big mode       ', self.start_the_Big,font_size=self.font_sub)
         self.menu.add_button('    Twohands mode   ', self.start_the_Twohands,font_size=self.font_sub)
-        self.menu.add_button('    vs Computer   ', self.select_Ai,font_size=self.font_sub)
+        self.menu.add_button('    vs Computer   ', self.start_the_Ai,font_size=self.font_sub)
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
-    def select_Ai(self):
+    def select_single(self):
         self.page='page12'
         Var.click.play()
         self.menu.clear()
@@ -159,8 +159,8 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_label("    --Select--    ",selectable=False,font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_show)
-        self.menu.add_button('      Easy mode      ', self.start_the_Ai,font_size=self.font_sub)
-        self.menu.add_button('      Hard mode      ', self.start_the_Ai,font_size=self.font_sub)
+        self.menu.add_button('      Easy mode      ', self.start_the_game,font_size=self.font_sub)
+        self.menu.add_button('      Hard mode      ', self.start_the_hard,font_size=self.font_sub)
         self.menu.add_button('           back            ', self.show_game,font_size=self.font_sub)
 
     def show_rank(self):  ## 랭크 들어가면 나오는 목록들기
@@ -281,6 +281,15 @@ class Menu:
         self.show_game()
         #self.show_score(self.Mode,self.tetris.Score)
 
+    def start_the_hard(self): # 클릭시 게임 실행 끝나면 기록 화면 보여주기
+        Var.click.play()
+        self.Mode = 'hard'
+        self.tetris.mode = 'hard'
+        self.tetris.run()
+        self.menu.clear()
+        self.show_game()
+        #self.show_score(self.Mode,self.tetris.Score)
+
     def start_the_Mini(self):
         Var.click.play()
         self.Mode = 'mini'
@@ -360,8 +369,8 @@ class Menu:
     # bgm 선택 코드
     def change_base_bgm(self):
         self.menu.clear()
-        self.menu.add_button('BGM 1',self.theme_base,font_size=self.font_sub)
-        self.menu.add_button('BGM 2',self.theme_black,font_size=self.font_sub)
+        self.menu.add_button('BGM 1',self.bgm1,font_size=self.font_sub)
+        self.menu.add_button('BGM 2',self.bgm2,font_size=self.font_sub)
         self.menu.add_button('back',self.show_list,font_size=self.font_sub)
 
     def bgm1(self):
