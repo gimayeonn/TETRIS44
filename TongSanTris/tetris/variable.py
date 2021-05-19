@@ -13,6 +13,9 @@ class Var:
     base_bgm = pygame.mixer.Sound('assets/sounds/base_sound.wav')
     base_bgm.set_volume(0.1)
 
+    base_bgm2 = pygame.mixer.Sound('assets/sounds/base_sound_2.wav')
+    base_bgm2.set_volume(0.1)
+
     block_fall = pygame.mixer.Sound('assets/sounds/block_fall.wav')
     block_fall.set_volume(0.1)
 
@@ -404,13 +407,13 @@ class Var:
                  [path+"ele3-1.png",path+"ele3-2.png"]]
     # char2_lst
     # char3_lst
-    
+
     # level 받아오기
     level = 3
     char = 1
 
 
-    
+
     def defineChar(char):
         if char==1:
             return char1_lst
@@ -418,7 +421,7 @@ class Var:
             return char2_lst
         else:
             return char3_lst
-    
+
     char_basic = pygame.transform.scale(pygame.image.load(defineChar(char)[level-1][0]),
                                         (char_width,char_height))
 
@@ -428,4 +431,3 @@ class Var:
 
 
     theme_num=1
-    
