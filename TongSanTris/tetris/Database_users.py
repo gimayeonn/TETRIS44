@@ -74,18 +74,19 @@ class Database:
         #불러 오기
         curs = self.score_db.cursor(pymysql.cursors.DictCursor)
         if game_mode == 'basic':
-            sql = "select * from original_score order by score desc "
+            sql = "SELECT * FROM original_score ORDER BY score DESC "
         elif game_mode == 'hard':
-            sql = "select * from hard_score order by score desc "
+            sql = "SELECT * FROM hard_score ORDER BY score DESC "
         elif game_mode == 'two':
-            sql = "select * from twohands_score order by score desc"
+            sql = "SELECT * FROM twohands_score ORDER BY score DESC"
         elif game_mode == 'mini':
-            sql = "select * from mini_score order by score desc"
+            sql = "SELECT * FROM mini_score ORDER BY score DESC"
         elif game_mode == 'big':
-            sql = "select * from big_score order by score desc"
+            sql = "SELECT * FROM big_score ORDER BY score DESC"
         curs.execute(sql)
         data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
         curs.close()
+        print(data)
         return data
 
     def add_data(self,game_mode,  ID, score): #랭크 점수 기록

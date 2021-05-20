@@ -81,9 +81,12 @@ class Menu:
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
     def login(self):
-        if self.database.compare_data(self.id, self.password):
-            self.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
-            self.show_list()
+        if self.id:
+            if self.database.compare_data(self.id, self.password):
+                self.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
+                self.show_list()
+            else:
+                self.login_page()
         else:
             self.login_page()
 
