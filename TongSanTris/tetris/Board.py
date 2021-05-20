@@ -89,7 +89,6 @@ class Board:
         self.level = Var.initial_level  # 시작 level
         self.goal = Var.level_goal_per  # level up 도달 목표 a
         self.line = Var.initial_line    # 제거한 라인 수
-
         self.combo = Var.initial_combo  # combo 수
         self.timer0 = threading.Timer(Var.combo_reset_time, self.combo_null)
         self.timer1 = threading.Timer(Var.combo_reset_time, self.combo_null)
@@ -369,18 +368,18 @@ class Board:
             self.line += Var.count_line
 
             #모드별 score 다르게 측정 (수정중 ㅠㅠ)
-            if self.mode == 'hard':
-                self.score_hard += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-                self.score_hard += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
-            elif self.mode == 'mini':
-                self.score_mini += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-                self.score_mini += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
-            elif self.mode == 'big':
-                self.score_big += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-                self.score_big += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
-            else:
-                self.score += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-                self.score += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+            # if self.mode == 'hard':
+            #     self.score_hard += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+            #     self.score_hard += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+            # elif self.mode == 'mini':
+            #     self.score_mini += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+            #     self.score_mini += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+            # elif self.mode == 'big':
+            #     self.score_big += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+            #     self.score_big += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+            # else:
+            #     self.score += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
+            #     self.score += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
 
 
 

@@ -82,6 +82,7 @@ class Menu:
 
     def login(self):
         if self.database.compare_data(self.id, self.password):
+            self.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
             self.show_list()
         else:
             self.login_page()
@@ -132,7 +133,7 @@ class Menu:
         self.menu.add_button('  Help  ', self.help, font_size=self.font_sub)
         self.menu.add_button('   Select theme   ',self.change_theme,font_size=self.font_sub)
         self.menu.add_button('   Select BGM   ',self.change_base_bgm,font_size=self.font_sub)
-        self.menu.add_button(' back ', self.login_page, font_size=self.font_sub)
+        self.menu.add_button(' Log Out ', self.login_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
 
@@ -206,7 +207,7 @@ class Menu:
         self.menu.add_button("       ID       Score", self.Mini_the_rank,font_size=self.font_sub)
         original_data = self.database.load_data("basic") # 오리지날 모드 데이터 받아오기
         for i in range(Var.rank_max) : #최대 몇명까지 보여줄건지 설정
-            original_name=str(original_data[i]['ID'])
+            original_name=original_data[i]['ID']
             original_score = '{0:>05s}'.format(str(original_data[i]['score']))
             r= "#{} : ".format(i+1) + original_name+"    "+ original_score
             self.menu.add_button(r, self.pass_,font_size=self.font_sub)
@@ -224,7 +225,7 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
         for i in range(Var.rank_max):
-            original_name = str(twohadns_data[i]['ID'])
+            original_name = twohadns_data[i]['ID']
             original_score = '{0:>05s}'.format(str(twohadns_data[i]['score']))
             r = "#{} : ".format(i+1) + original_name + "    " + original_score
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
@@ -241,7 +242,7 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
         for i in range(Var.rank_max):
-            original_name = str(mini_data[i]['ID'])
+            original_name = mini_data[i]['ID']
             original_score = '{0:>05s}'.format(str(mini_data[i]['score']))
             r = "#{} : ".format(i+1) + original_name + "    " + original_score
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
@@ -252,14 +253,14 @@ class Menu:
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
-        mini_data = self.database.load_data("big")
+        big_data = self.database.load_data("big")
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_label("--Big Rank--", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
         for i in range(Var.rank_max):
-            original_name = str(mini_data[i]['ID'])
-            original_score = '{0:>05s}'.format(str(mini_data[i]['score']))
+            original_name = big_data[i]['ID']
+            original_score = '{0:>05s}'.format(str(big_data[i]['score']))
             r = "#{} : ".format(i+1) + original_name + "    " + original_score
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
         self.menu.add_button('back', self.show_list,font_size=self.font_sub)
