@@ -267,7 +267,13 @@ class Tetris:
         if self.mode == 'ai':
             Var.ai_bgm.play(-1)
         else:
-            Var.base_bgm.play(-1)
+            if Var.select_bgm1:
+                Var.base_bgm.play(-1)
+            elif Var.select_bgm2:
+                Var.base_bgm2.play(-1)
+            else:
+                Var.base_bgm.play(-1)
+
 
         if self.mode == 'ai':
             self.next_stone = Var.ai_tetris_shapes[
@@ -285,11 +291,13 @@ class Tetris:
             if self.mode == 'ai':
                 if self.board.game_over() or self.board.score < self.ai_score:
                     Var.ai_bgm.stop()
+                    Var.game_over.play()
                     self.board.show_my_score()
                     break
 
             if self.board.game_over():
                 Var.base_bgm.stop()
+                Var.base_bgm2.stop()
                 Var.ai_bgm.stop()
                 Var.game_over.play()
                 self.Score = self.board.score
@@ -306,6 +314,7 @@ class Tetris:
                     sys.exit()  # 게임을 종료한다ㅏ.
                 elif event.type == KEYUP and event.key == K_p:  # 일시 정지 버튼 누르면
                     Var.base_bgm.stop()
+                    Var.base_bgm2.stop()
                     Var.ai_bgm.stop()  # 일시 정지 노래 중둠    오류나서  일단 뺴
                     self.board.pause()
 
