@@ -2,8 +2,12 @@ import pygame
 import pygame_menu
 import random
 import os
+from Database_users import *
+from Menu import *
+
 
 class Var:
+    database= Database()
     pygame.mixer.init()
 
     # 사운드 관련
@@ -360,7 +364,7 @@ class Var:
 
 
 
-    rank_id_max=3           #랭크 ID 최대 이름 수
+    rank_id_max=50           #랭크 ID 최대 이름 수
     rank_max=5              # 랭크 보여주는 창 최대 갯수 -1
     min_display_w =400      # 메뉴 최소 사이즈 가로
     min_display_h =400      # 메뉴 최소 사이즈 세로
@@ -400,6 +404,9 @@ class Var:
     margin_show = int((menu_display_h)/rate_show)   #SHOW 화면
     margin_rank =int((menu_display_h)/rate_rank)    #RANK 화면
     margin_help=500    #HELP 화면
+
+    #아이디, 경험치
+    user_id='abcd'
 
     #캐릭터 (데이터베이스에서 계정마다 "레벨", "캐릭터" 정보 받아오기)
 
