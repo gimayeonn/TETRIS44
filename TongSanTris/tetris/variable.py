@@ -441,3 +441,7 @@ class Var:
 
 
     theme_num=1
+
+    # 배경음악 선택
+    select_bgm1 = 0
+    select_bgm2 = 0

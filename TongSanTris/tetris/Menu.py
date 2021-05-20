@@ -376,9 +376,12 @@ class Menu:
 
     def bgm1(self):
         Var.base_bgm = pygame.mixer.Sound('assets/sounds/base_sound.wav')
-        base_bgm.set_volume(0.1)
-
+        Var.base_bgm.set_volume(0.1)
+        Var.select_bgm2 = 0
+        Var.select_bgm1 = 1
 
     def bgm2(self):
         Var.base_bgm2 = pygame.mixer.Sound('assets/sounds/base_sound_2.wav')
-        base_bgm2.set_volume(0.1)
+        Var.base_bgm2.set_volume(0.1)
+        Var.select_bgm1 = 0
+        Var.select_bgm2 = 1
