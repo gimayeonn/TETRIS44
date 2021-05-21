@@ -35,7 +35,8 @@ class Database:
         curs.close()
 
 
-    def add_password_data(self,user_password,user_id): #회원가입시 초기 경험치값은 0으로 설정
+    def add_password_data(self,user_password,user_id):
+        #회원가입시 초기 경험치값은 0으로 설정
         #추가하기
         initial_exp=0
         new_salt=bcrypt.gensalt()
@@ -61,13 +62,32 @@ class Database:
         return data['user_exp']
 
     def update_exp_data(self,user_exp,user_id):
+        
         curs = self.score_db.cursor()
         sql = "UPDATE users SET user_exp= %s WHERE user_id=%s"
         curs.execute(sql, (user_exp, user_id))
         self.score_db.commit()
         curs.close()
 
+    def update_char_data(self,user_char,user_id):
+        curs = self.score_db.cursor()
+        sql = "UPDATE users SET user_character= %s WHERE user_id=%s"
+        print("user_char>>>>>>>>> : ",user_char)
+        curs.execute(sql, (user_char, user_id))
+        self.score_db.commit()
+        curs.close()
 
+
+    def load_char_data(self,user_id):
+        curs = self.score_db.cursor(pymysql.cursors.DictCursor)
+        sql = "SELECT * FROM users WHERE user_id=%s"
+        curs.execute(sql, user_id)
+        data = curs.fetchone()  # 리스트 안에 딕셔너리가 있는 형태
+        curs.close()
+        print("ID : ",data['user_id'])
+        print("EXP : ",data['user_exp'])
+        print("CHAR : ",data['user_character'])
+        return data['user_character']
 
 
     def load_data(self, game_mode): #랭크 점수 데이터 불러오기

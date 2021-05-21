@@ -3,6 +3,9 @@ from pygame.locals import *
 from Piece import *
 import threading
 from variable import Var
+from Database_users import *
+
+
 
 
 class Board:
@@ -12,8 +15,10 @@ class Board:
     def __init__(self, mode):
         self.mode = mode
         self.start = time.time()
-        self.character = Var.char_basic
         self.char_time = 0
+        self.character = Var.char_basic
+
+
 
         if (mode == 'basic'):
             self.width = Var.basic_width  # 맵의 좌에서 우로 사이즈
@@ -61,7 +66,7 @@ class Board:
         self.generate_piece(self.mode)  # 블럭 생성 메소드 실행
         if (mode == 'two'):
             self.generate_piece2()
-        # self.database = Database()
+        self.database = Database()
 
         # 상태 줄 정보
         # (self.width*self.block_size) = self.width * self.block_size
@@ -753,7 +758,10 @@ class Board:
     def show_my_score(self):
         pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h))
         fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', Var.myscore_font)
-
+        # 경험치 부여
+        Var.exp += self.score
+        print(Var.exp)
+        self.database.update_exp_data(Var.exp,Var.ID)
         if Var.theme_num==1:
             screen_color = Var.MAIN_VIOLET_W
             font_color = Var.MAIN_YELLOW
@@ -777,3 +785,5 @@ class Board:
 
     def save_score(self, game_mode, ID):
         self.database.add_data(game_mode, ID, self.score)
+
+
