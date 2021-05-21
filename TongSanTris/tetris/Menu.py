@@ -4,6 +4,8 @@ import pygame_menu
 from Tetris import *
 from Database_users import *
 import time
+
+
 class Menu:
 
     def __init__(self):
@@ -80,16 +82,51 @@ class Menu:
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
+
+
     def login(self):
         if self.id:
             if self.database.compare_data(self.id, self.password):
-                self.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
-                self.show_list()
+                # 현재 선택 캐릭터가 없다면 캐릭터 선택 (char변수 할당) (아직 미구현)
+                char = self.database.load_char_data(self.id)
+                if char is None:
+                    print("select char")
+                    self.menu.clear()
+                    #self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
+                    path = "assets/images/"
+                    self.menu.add_button('1) Elephant', self.set_char1,font_size=self.font_sub)
+                    self.menu.add_image(Var.char1_lst[0][0])
+                    self.menu.add_button('2) Chicken', self.set_char2,font_size=self.font_sub)
+                    self.menu.add_image(Var.char2_lst[0][0])
+                    print("Select chick: " , Var.char)
+                    
+                    print("update char : ",Var.char)
+                else:
+                    self.show_list()
+
+                 
+                # 계정의 exp,char 값 가져오기
+                Var.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
+                Var.char=self.database.load_char_data(self.id)
+                Var.ID = self.id
+                #self.show_list()
+                
+
             else:
                 self.login_page()
         else:
             self.login_page()
 
+    def set_char1(self):
+        Var.char = 1
+        self.database.update_char_data(Var.char,Var.ID)
+        self.show_list()
+
+    def set_char2(self):
+        Var.char = 2
+        self.database.update_char_data(Var.char,Var.ID)
+        print("set_char2 : ",Var.char)
+        self.show_list()
 
     #아이디 입력값
     def get_text(self,value):
@@ -133,6 +170,7 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_button('   Select mode   ', self.show_game,font_size=self.font_sub)
         self.menu.add_button('    Show Rank    ', self.show_rank,font_size=self.font_sub)
+        self.menu.add_button('    My Info.    ', self.show_info,font_size=self.font_sub)
         self.menu.add_button('  Help  ', self.help, font_size=self.font_sub)
         self.menu.add_button('   Select theme   ',self.change_theme,font_size=self.font_sub)
         self.menu.add_button('   Select BGM   ',self.change_base_bgm,font_size=self.font_sub)
@@ -193,7 +231,18 @@ class Menu:
     #    self.menu.add_text_input('ID: ', maxchar=Var.rank_id_max,onreturn=self.save_id,font_size=self.font_main) # 아이디 적는 칸
     #    self.menu.add_button("Exit",pygame_menu.events.EXIT,font_size=self.font_main)
 
+    # exp,char 변수 보여주기 
+    def show_info(self):
+        self.menu.clear()
+        self.menu.add_label("ID : " , font_size=self.font_sub)
+        self.menu.add_label(Var.ID , font_size=self.font_sub)
+        self.menu.add_label("EXP : " , font_size=self.font_sub)
+        self.menu.add_label(Var.exp , font_size=self.font_sub)
+        self.menu.add_label("CHAR : " , font_size=self.font_sub)
+        self.menu.add_label(Var.char , font_size=self.font_sub)
+        #self.menu.add_image(Var.char_basic)
 
+        self.menu.add_button(' back ', self.show_list,font_size=self.font_sub)
 
     def stop(self):
         Var.click.play()
@@ -366,7 +415,7 @@ class Menu:
         Var.mytheme_help.background_color = pygame_menu.baseimage.BaseImage(
             image_path='assets/images/Keyset2.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-        Var.mytheme=pygame_menu.themes.THEME_BLUE.copy
+        #Var.mytheme=pygame_menu.themes.THEME_BLUE.copy
         Var.theme_num=2
 
 

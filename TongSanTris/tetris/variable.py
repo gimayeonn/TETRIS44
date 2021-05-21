@@ -411,34 +411,55 @@ class Var:
     #캐릭터 (데이터베이스에서 계정마다 "레벨", "캐릭터" 정보 받아오기)
 
     path = "assets/images/"
-    global char1_lst
+    #global char1_lst
+
+    def getChar1lst():
+        return char1_lst
+
+
+    
     char1_lst = [[path+"ele1-1.png",path+"ele1-2.png"],
                  [path+"ele2-1.png",path+"ele2-2.png"],
                  [path+"ele3-1.png",path+"ele3-2.png"]]
+
+    char2_lst = [[path+"chick1-1.png",path+"chick1-2.png"],
+                 [path+"chick2-1.png",path+"chick2-2.png"],
+                 [path+"chick3-1.png",path+"chick3-2.png"]]
+    
     # char2_lst
-    # char3_lst
+    
 
-    # level 받아오기
-    level = 3
+    # exp 받아오기
+    exp = 0
+    level = 1
     char = 1
+    ID = 0
+
+    lst = char1_lst if char==1 else char2_lst if char==2 else char3_lst
+
+
+    #def getChar():
+    #    return char
 
 
 
-    def defineChar(char):
-        if char==1:
-            return char1_lst
-        elif char==2:
-            return char2_lst
-        else:
-            return char3_lst
-
-    char_basic = pygame.transform.scale(pygame.image.load(defineChar(char)[level-1][0]),
+    char_basic = pygame.transform.scale(pygame.image.load(lst[level-1][0]),
                                         (char_width,char_height))
 
-    char_lineclear = pygame.transform.scale(pygame.image.load(defineChar(char)[level-1][1]),
+    char_lineclear = pygame.transform.scale(pygame.image.load(lst[level-1][1]),
                                         (char_width,char_height))
 
-
+    
+    #def getBasic(num,level,char_width,char_height):
+    #    if num==1:
+    #        lst = char1_lst
+    #    elif num==2:
+    #        lst = char2_lst
+    #    else:
+    #        lst = char3_lst
+    #        
+    #    image = pygame.transform.scale(pygame.image.load(lst[level-1][0]),                                    (char_width,char_height))
+    #    return image
 
     theme_num=1
 
