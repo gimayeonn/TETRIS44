@@ -57,7 +57,9 @@ while True:
             elif mymenu.page=='page11':
                 mymenu.help()
             elif mymenu.page=='page12':
-                mymenu.select_Ai()
+                mymenu.select_single()
+            elif mymenu.page=='page13':
+                mymenu.Single_hard_rank()
     if mymenu.menu.is_enabled():
         mymenu.menu.update(events)
         mymenu.menu.draw(mymenu.surface)
