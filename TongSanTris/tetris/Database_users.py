@@ -62,7 +62,6 @@ class Database:
         return data['user_exp']
 
     def update_exp_data(self,user_exp,user_id):
-        
         curs = self.score_db.cursor()
         sql = "UPDATE users SET user_exp= %s WHERE user_id=%s"
         curs.execute(sql, (user_exp, user_id))

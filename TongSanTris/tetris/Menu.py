@@ -107,7 +107,7 @@ class Menu:
                     Var.lst = Var.char1_lst
                 elif char==2:
                     Var.lst = Var.char2_lst
-                Var.ID = self.id
+                Var.user_id = self.id
 
             else:
                 self.login_page()
@@ -116,13 +116,17 @@ class Menu:
 
     def set_char1(self):
         Var.char = 1
-        self.database.update_char_data(Var.char,Var.ID)
-        self.login_page()
+        self.database.update_char_data(Var.char,Var.user_id)
+        Var.lst = Var.char1_lst
+        Var.user_id = self.id
+        self.show_list()
 
     def set_char2(self):
         Var.char = 2
-        self.database.update_char_data(Var.char,Var.ID)
-        self.login_page()
+        self.database.update_char_data(Var.char,Var.user_id)
+        Var.lst = Var.char2_lst
+        Var.user_id = self.id
+        self.show_list()
 
     #아이디 입력값
     def get_text(self,value):
@@ -215,23 +219,11 @@ class Menu:
         self.menu.add_button('       Big mode       ', self.Big_the_rank,font_size=self.font_sub)
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
-
-    #def show_score(self ,game_mode,game_score):  # Rank 기록 하는 페이지
-    #    self.page='page6'
-    #    self.Mode=game_mode # 게임 모드 받아오기
-    #    self.score=game_score  # 점수 받아오기
-    #    self.surface=pygame.display.set_mode((self.w,self.h),RESIZABLE)
-    #    self.mytheme.widget_margin=self.widget_margin_main
-    #    self.menu.add_vertical_margin(self.margin_main)
-    #    self.menu.add_button(self.Mode+' Mode', self.pass_,font_size=self.font_main)
-    #    self.menu.add_text_input('ID: ', maxchar=Var.rank_id_max,onreturn=self.save_id,font_size=self.font_main) # 아이디 적는 칸
-    #    self.menu.add_button("Exit",pygame_menu.events.EXIT,font_size=self.font_main)
-
     # exp,char 변수 보여주기 
     def show_info(self):
         self.menu.clear()
         self.menu.add_label("ID : " , font_size=self.font_sub)
-        self.menu.add_label(Var.ID , font_size=self.font_sub)
+        self.menu.add_label(Var.user_id , font_size=self.font_sub)
         self.menu.add_label("EXP : " , font_size=self.font_sub)
         self.menu.add_label(Var.exp , font_size=self.font_sub)
         self.menu.add_label("CHAR : " , font_size=self.font_sub)
