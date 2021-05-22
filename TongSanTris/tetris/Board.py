@@ -16,7 +16,12 @@ class Board:
         self.mode = mode
         self.start = time.time()
         self.char_time = 0
-        self.character = Var.char_basic
+        self.char_basic = pygame.transform.scale(pygame.image.load(Var.lst[Var.level - 1][0]),
+                                            (Var.char_width, Var.char_height))
+
+        self.char_lineclear = pygame.transform.scale(pygame.image.load(Var.lst[Var.level - 1][1]),
+                                                (Var.char_width, Var.char_height))
+        self.character = self.char_basic
 
 
 
@@ -361,7 +366,7 @@ class Board:
             Var.line_clear.play()
 
             # 캐릭터 추가
-            self.character = Var.char_lineclear
+            self.character = self.char_lineclear
             self.char_time = time.time()
 
             # 라인 삭제 실행
@@ -673,7 +678,7 @@ class Board:
         self.screen.blit(self.character, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.char_loc))
         if (time.time() - self.char_time) > 1.2 :
-            self.character = Var.char_basic
+            self.character = self.char_basic
 
 
         if self.mode == 'ai':
