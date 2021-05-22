@@ -76,8 +76,6 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_text_input('ID : ', maxchar=100, onreturn=self.get_text, font_size=self.font_sub)
         self.menu.add_text_input('PASSWORD : ', maxchar=100, onreturn=self.get_text2,password=True, password_char='*', font_size=self.font_sub)
-        #print(self.id)
-        #print(self.password)
         self.menu.add_button('  Log In   ', self.login,font_size=self.font_sub)
         self.menu.add_button('  back  ', self.first_page, font_size=self.font_sub)
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
@@ -86,7 +84,7 @@ class Menu:
 
     def login(self):
         if self.id:
-            if self.database.compare_data(self.id, self.password):
+            if self.password and self.database.compare_data(self.id, self.password):
                 # 현재 선택 캐릭터가 없다면 캐릭터 선택 (char변수 할당) (아직 미구현)
                 char = self.database.load_char_data(self.id)
                 if char is None:
@@ -98,19 +96,18 @@ class Menu:
                     self.menu.add_image(Var.char1_lst[0][0])
                     self.menu.add_button('2) Chicken', self.set_char2,font_size=self.font_sub)
                     self.menu.add_image(Var.char2_lst[0][0])
-                    print("Select chick: " , Var.char)
-                    
-                    print("update char : ",Var.char)
+                    self.menu.add_button('  back  ', self.login_page, font_size=self.font_sub)
                 else:
                     self.show_list()
 
-                 
                 # 계정의 exp,char 값 가져오기
                 Var.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
                 Var.char=self.database.load_char_data(self.id)
+                if char==1:
+                    Var.lst = Var.char1_lst
+                elif char==2:
+                    Var.lst = Var.char2_lst
                 Var.ID = self.id
-                #self.show_list()
-                
 
             else:
                 self.login_page()
@@ -120,13 +117,12 @@ class Menu:
     def set_char1(self):
         Var.char = 1
         self.database.update_char_data(Var.char,Var.ID)
-        self.show_list()
+        self.login_page()
 
     def set_char2(self):
         Var.char = 2
         self.database.update_char_data(Var.char,Var.ID)
-        print("set_char2 : ",Var.char)
-        self.show_list()
+        self.login_page()
 
     #아이디 입력값
     def get_text(self,value):
