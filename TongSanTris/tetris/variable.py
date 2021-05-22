@@ -405,9 +405,6 @@ class Var:
     margin_rank =int((menu_display_h)/rate_rank)    #RANK 화면
     margin_help=500    #HELP 화면
 
-    #아이디, 경험치
-    user_id='abcd'
-
     #캐릭터 (데이터베이스에서 계정마다 "레벨", "캐릭터" 정보 받아오기)
 
     path = "assets/images/"
@@ -428,7 +425,7 @@ class Var:
     exp = 0
     level = 1
     char = 1
-    ID = 0
+    user_id = ''
 
     lst = char1_lst
 

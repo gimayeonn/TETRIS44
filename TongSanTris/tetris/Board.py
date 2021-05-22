@@ -766,7 +766,7 @@ class Board:
         # 경험치 부여
         Var.exp += self.score
         print(Var.exp)
-        self.database.update_exp_data(Var.exp,Var.ID)
+        self.database.update_exp_data(Var.exp,Var.user_id)
         if Var.theme_num==1:
             screen_color = Var.MAIN_VIOLET_W
             font_color = Var.MAIN_YELLOW
@@ -787,8 +787,5 @@ class Board:
                 elif event.type == KEYDOWN:
                     running = False
             pygame.display.update()
-
-    def save_score(self, game_mode, ID):
-        self.database.add_data(game_mode, ID, self.score)
 
 
