@@ -213,7 +213,8 @@ class Menu:
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_label("     --Show Rank--     ", max_char=0, selectable=False,font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_show)
-        self.menu.add_button('      Single mode      ', self.Single_the_rank,font_size=self.font_sub)
+        self.menu.add_button('      Single Easy mode      ', self.Single_the_rank,font_size=self.font_sub)
+        self.menu.add_button('      Single Hard mode      ', self.Single_hard_rank, font_size=self.font_sub)
         self.menu.add_button('    Twohands mode   ', self.Twohands_the_rank,font_size=self.font_sub)
         self.menu.add_button('       MiNi mode       ', self.Mini_the_rank,font_size=self.font_sub)
         self.menu.add_button('       Big mode       ', self.Big_the_rank,font_size=self.font_sub)
@@ -236,22 +237,60 @@ class Menu:
         Var.click.play()
         self.menu.disable()
 
-    def Single_the_rank(self): #기본 모드 랭크 보는 화면
+    def load_data(self, game_mode): #랭크 점수 데이터 불러오기
+        # self.database.__init__()
+        # 이렇게 하면 랭크업데이트 되는데 DB에 연결이 너무 많아져서 테스트때는 주석처리하고 제출할 때 주석 풀고 제출
+        #불러 오기
+        curs = self.database.score_db.cursor(pymysql.cursors.DictCursor)
+        if game_mode == 'easy':
+            sql = "SELECT * FROM original_score ORDER BY score DESC "
+        elif game_mode == 'hard':
+            sql = "SELECT * FROM hard_score ORDER BY score DESC "
+        elif game_mode == 'two':
+            sql = "SELECT * FROM twohands_score ORDER BY score DESC"
+        elif game_mode == 'mini':
+            sql = "SELECT * FROM mini_score ORDER BY score DESC"
+        elif game_mode == 'big':
+            sql = "SELECT * FROM big_score ORDER BY score DESC"
+        curs.execute(sql)
+        data = curs.fetchall() #리스트 안에 딕셔너리가 있는 형태
+        curs.close()
+        return data
+
+    def Single_the_rank(self): #기본 이지 모드 랭크 보는 화면
         self.page='page7'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_label("--Single Rank--", selectable=False, font_size=self.font_main)
+        self.menu.add_label("--Single Easy Rank--", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.Mini_the_rank,font_size=self.font_sub)
-        original_data = self.database.load_data("basic") # 오리지날 모드 데이터 받아오기
+        original_data = self.load_data("easy") # 오리지날 모드 데이터 받아오기
         for i in range(Var.rank_max) : #최대 몇명까지 보여줄건지 설정
             original_name=original_data[i]['ID']
             original_score = '{0:>05s}'.format(str(original_data[i]['score']))
             r= "#{} : ".format(i+1) + original_name+"    "+ original_score
             self.menu.add_button(r, self.pass_,font_size=self.font_sub)
-        self.menu.add_button('back', self.show_list,font_size=self.font_sub)
+        self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
+
+
+    def Single_hard_rank(self): #기본 하드 모드 랭크 보는 화면
+        self.page='page13'
+        Var.click.play()
+        self.menu.clear()
+        self.mytheme.widget_margin=self.widget_margin_rank
+        self.menu.add_vertical_margin(self.margin_main)
+        self.menu.add_label("--Single Hard Rank--", selectable=False, font_size=self.font_main)
+        self.menu.add_vertical_margin(self.margin_rank)
+        self.menu.add_button("       ID       Score", self.Mini_the_rank,font_size=self.font_sub)
+        hard_data = self.load_data("hard")
+        for i in range(Var.rank_max) :
+            original_name=hard_data[i]['ID']
+            original_score = '{0:>05s}'.format(str(hard_data[i]['score']))
+            r= "#{} : ".format(i+1) + original_name+"    "+ original_score
+            self.menu.add_button(r, self.pass_,font_size=self.font_sub)
+        self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
 
 
     def Twohands_the_rank(self):
@@ -260,7 +299,7 @@ class Menu:
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
         self.menu.add_vertical_margin(self.margin_main)
-        twohadns_data = self.database.load_data("two")
+        twohadns_data = self.load_data("two")
         self.menu.add_label("--Two Rank--",  selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
@@ -269,14 +308,14 @@ class Menu:
             original_score = '{0:>05s}'.format(str(twohadns_data[i]['score']))
             r = "#{} : ".format(i+1) + original_name + "    " + original_score
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
-        self.menu.add_button('back', self.show_list,font_size=self.font_sub)
+        self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
 
     def Mini_the_rank(self):
         self.page='page9'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
-        mini_data = self.database.load_data("mini")
+        mini_data = self.load_data("mini")
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_label("--Mini Rank--", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
@@ -286,14 +325,14 @@ class Menu:
             original_score = '{0:>05s}'.format(str(mini_data[i]['score']))
             r = "#{} : ".format(i+1) + original_name + "    " + original_score
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
-        self.menu.add_button('back', self.show_list,font_size=self.font_sub)
+        self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
 
     def Big_the_rank(self):
         self.page='page10'
         Var.click.play()
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
-        big_data = self.database.load_data("big")
+        big_data = self.load_data("big")
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_label("--Big Rank--", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
@@ -303,7 +342,8 @@ class Menu:
             original_score = '{0:>05s}'.format(str(big_data[i]['score']))
             r = "#{} : ".format(i+1) + original_name + "    " + original_score
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
-        self.menu.add_button('back', self.show_list,font_size=self.font_sub)
+        self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
+
 
 
     def help(self): # help 페이지
