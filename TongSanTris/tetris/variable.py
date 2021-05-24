@@ -418,7 +418,9 @@ class Var:
                  [path+"chick2-1.png",path+"chick2-2.png"],
                  [path+"chick3-1.png",path+"chick3-2.png"]]
     
-    # char3_lst
+    char3_lst = [[path+"but1-1.png",path+"but1-2.png"],
+                 [path+"but2-1.png",path+"but2-2.png"],
+                 [path+"but3-1.png",path+"but3-2.png"]]
     
 
     # exp 받아오기
