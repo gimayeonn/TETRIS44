@@ -3,7 +3,7 @@ from variable import Var
 
 #테트리스 블럭 clss
 class Piece:
-    
+
 
     PIECES = {'O': Var.O, 'I': Var.I, 'L': Var.L, 'J': Var.J, 'Z': Var.Z, 'S':Var.S, 'T':Var.T}
 

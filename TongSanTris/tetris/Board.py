@@ -377,24 +377,30 @@ class Board:
             # 라인 삭제시 제거된 라인 1 증가
             self.line += Var.count_line
 
-            #모드별 score 다르게 측정 (수정중 ㅠㅠ)
-            # if self.mode == 'hard':
-            #     self.score_hard += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-            #     self.score_hard += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
-            # elif self.mode == 'mini':
-            #     self.score_mini += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-            #     self.score_mini += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
-            # elif self.mode == 'big':
-            #     self.score_big += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-            #     self.score_big += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
-            # else:
-            #     self.score += self.level * self.combo * Var.combo_score_rate    # 콤보 * level * 10 만큼 점수 올려주기
-            #     self.score += Var.level_score_rate * self.level                 # level * 10 만큼 점수 올려주기
+
+
+            if self.mode == 'hard':
+                    self.score += self.level * self.combo * Var.combo_score_rate
+                    self.score += Var.level_score_rate * self.level
+                    self.score += 30
+                    self.goal -= Var.count_goal
+            elif self.mode == 'big' or 'two':
+                    self.score += self.level * self.combo * Var.combo_score_rate # 콤보 *level * 10 만큼 점수 올려주기
+                    self.score += Var.level_score_rate * self.level # level * 10 만큼 점수 올려주기
+                    self.score += 20
+                    self.goal -= Var.count_goal # level up까지 목표 골수 1만큼 내려주기
+            elif self.mode == 'mini':
+                    self.score += self.level * self.combo * Var.combo_score_rate
+                    self.score += Var.level_score_rate * self.level
+                    self.score += 10
+                    self.goal -= Var.count_goal
+            else:
+                    self.score += self.level * self.combo * Var.combo_score_rate
+                    self.score += Var.level_score_rate * self.level
+                    self.goal -= Var.count_goal
 
 
 
-            # level up까지 목표 골수 1만큼 내려주기
-            self.goal -= Var.count_goal
 
             if self.goal == Var.goal_zero_state:  # 만약 골이 0이된다면
                 if self.level < Var.max_level:  # 레벨이 10보다 작다면
@@ -787,5 +793,3 @@ class Board:
                 elif event.type == KEYDOWN:
                     running = False
             pygame.display.update()
-
-
