@@ -417,11 +417,11 @@ class Var:
     char2_lst = [[path+"chick1-1.png",path+"chick1-2.png"],
                  [path+"chick2-1.png",path+"chick2-2.png"],
                  [path+"chick3-1.png",path+"chick3-2.png"]]
-    
+
     char3_lst = [[path+"but1-1.png",path+"but1-2.png"],
                  [path+"but2-1.png",path+"but2-2.png"],
                  [path+"but3-1.png",path+"but3-2.png"]]
-    
+
 
     # exp 받아오기
     exp = 0
@@ -439,7 +439,7 @@ class Var:
     #        lst = char2_lst
     #    else:
     #        lst = char3_lst
-    #        
+    #
     #    image = pygame.transform.scale(pygame.image.load(lst[level-1][0]),                                    (char_width,char_height))
     #    return image
 
