@@ -4,6 +4,7 @@ from Piece import *
 import threading
 from variable import Var
 from Database_users import *
+from Menu import *
 
 
 
@@ -16,10 +17,18 @@ class Board:
         self.mode = mode
         self.start = time.time()
         self.char_time = 0
-        self.char_basic = pygame.transform.scale(pygame.image.load(Var.lst[Var.level - 1][0]),
+        print(Var.exp)
+        if Var.exp<5000:
+            Var.char_level=1
+        elif Var.exp>=5000 and Var.exp<12000:
+            Var.char_level=2
+        elif Var.exp>=12000:
+            Var.char_level=3
+        print(Var.char_level)
+        self.char_basic = pygame.transform.scale(pygame.image.load(Var.lst[Var.char_level - 1][0]),
                                             (Var.char_width, Var.char_height))
 
-        self.char_lineclear = pygame.transform.scale(pygame.image.load(Var.lst[Var.level - 1][1]),
+        self.char_lineclear = pygame.transform.scale(pygame.image.load(Var.lst[Var.char_level - 1][1]),
                                                 (Var.char_width, Var.char_height))
         self.character = self.char_basic
 
@@ -632,7 +641,7 @@ class Board:
         score_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('SCORE', True, Var.BLACK)
         score_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.score), True,
                                                                                                   Var.w_pink)
-        level_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('LEVEL', True, Var.BLACK)
+        level_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('STAGE LEVEL', True, Var.BLACK)
         level_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.level), True,
                                                                                                   Var.DARK_GRAY)
         goal_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('GOAL', True, Var.BLACK)
@@ -742,14 +751,13 @@ class Board:
     # 게임 일시정지
     def pause(self):
 
-        fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_big_in * Var.font_size_double)  # 글씨 폰트 설정
-        textSurfaceObj = fontObj.render('Paused', True, Var.WHITE)  # 위 폰트로 초록색 글씨
+        fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in * Var.font_size_double)  # 글씨 폰트 설정
+        textSurfaceObj = fontObj.render('P : Back To Game Q : Quit', True, Var.WHITE)  # 위 폰트로 초록색 글씨
         textRectObj = textSurfaceObj.get_rect()
-        textRectObj.center = (self.width * self.block_size / Var.center_divide, self.display_height / Var.center_divide)
+        textRectObj.center = ((self.width*1.5) * self.block_size / Var.center_divide, self.display_height / Var.center_divide)
 
         # 스크린에 표시
         self.screen.blit(textSurfaceObj, textRectObj)
-        # self.screen.blit(textSurfaceObj2, textRectObj2)
         pygame.display.update()
 
         running = True
@@ -758,7 +766,10 @@ class Board:
                 if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
-                elif event.type == KEYUP and event.key == K_p:  # p 누르면 다싯 시작
+                elif event.type == KEYUP and event.key == K_q: # q 누르면 게임 종료
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == KEYUP and event.key == K_p:  # p 누르면 다시 시작
                     if self.mode == 'ai':
                         Var.ai_bgm.play()
                     else:
@@ -770,7 +781,7 @@ class Board:
         pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h))
         fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', Var.myscore_font)
         # 경험치 부여
-        Var.exp += self.score
+        Var.exp += self.score/10
         print(Var.exp)
         self.database.update_exp_data(Var.exp,Var.user_id)
         if Var.theme_num==1:
