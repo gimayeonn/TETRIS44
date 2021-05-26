@@ -238,9 +238,8 @@ class Menu:
         self.menu.add_label(Var.user_id , font_size=self.font_sub)
         self.menu.add_label("EXP : " , font_size=self.font_sub)
         self.menu.add_label(Var.exp , font_size=self.font_sub)
-        self.menu.add_label("CHAR : " , font_size=self.font_sub)
-        self.menu.add_label(Var.char , font_size=self.font_sub)
-        #self.menu.add_image(Var.char_basic)
+        self.menu.add_label("CHAR : " , font_size=self.font_sub) 
+        self.menu.add_image(Var.lst[Var.char_level - 1][0])
 
         self.menu.add_button(' back ', self.show_list,font_size=self.font_sub)
 
