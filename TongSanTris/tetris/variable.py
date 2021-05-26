@@ -254,10 +254,12 @@ class Var:
     level_val_loc = 0.48
     goal_loc = 0.54
     goal_val_loc = 0.58
-    combo_loc = 0.64
-    combo_val_loc = 0.68
-    line_loc = 0.74
-    line_val_loc = 0.78
+    #combo_loc = 0.64
+    #combo_val_loc = 0.68
+    line_loc = 0.64
+    line_val_loc = 0.68
+    exp_loc = 0.74
+    exp_val_loc = 0.78
 
     # 변경
     time_loc = 0.25
