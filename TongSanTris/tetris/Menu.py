@@ -96,6 +96,8 @@ class Menu:
                     self.menu.add_image(Var.char1_lst[0][0])
                     self.menu.add_button('2) Chicken', self.set_char2,font_size=self.font_sub)
                     self.menu.add_image(Var.char2_lst[0][0])
+                    self.menu.add_button('3) Butterfly', self.set_char3, font_size=self.font_sub)
+                    self.menu.add_image(Var.char3_lst[0][0])
                     self.menu.add_button('  back  ', self.login_page, font_size=self.font_sub)
                 else:
                     self.show_list()
@@ -107,6 +109,8 @@ class Menu:
                     Var.lst = Var.char1_lst
                 elif char==2:
                     Var.lst = Var.char2_lst
+                elif char==3:
+                    Var.lst = Var.char3_lst
                 Var.user_id = self.id
 
             else:
@@ -125,6 +129,13 @@ class Menu:
         Var.char = 2
         self.database.update_char_data(Var.char,Var.user_id)
         Var.lst = Var.char2_lst
+        Var.user_id = self.id
+        self.show_list()
+
+    def set_char3(self):
+        Var.char = 3
+        self.database.update_char_data(Var.char,Var.user_id)
+        Var.lst = Var.char3_lst
         Var.user_id = self.id
         self.show_list()
 

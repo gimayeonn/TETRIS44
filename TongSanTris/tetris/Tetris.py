@@ -301,8 +301,6 @@ class Tetris:
                 Var.ai_bgm.stop()
                 Var.game_over.play()
                 self.Score = self.board.score
-                self.Exp=self.board.score #일단 스코어랑 같은 값으로
-                self.database.update_exp_data(self.Exp, Var.user_id) #Exp 도 스코어처럼 증가하는 계산해서 넣으면됨
                 self.database.add_data(self.mode, Var.user_id, self.Score)
                 self.board.show_my_score()
                 break

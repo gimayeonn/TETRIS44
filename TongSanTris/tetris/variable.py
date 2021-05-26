@@ -425,7 +425,7 @@ class Var:
 
     # exp 받아오기
     exp = 0
-    level = 1
+    char_level = 1
     char = 1
     user_id = ''
 
