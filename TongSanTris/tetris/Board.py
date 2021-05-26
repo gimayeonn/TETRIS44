@@ -651,14 +651,21 @@ class Board:
                                                                                                Var.GRAY)
         # 콤보 값 넣어주기
 
-        combo_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('COMBO', True, Var.BLACK)
-        combo_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.combo), True,
-                                                                                                  Var.DARK_GRAY)
+        # combo_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('COMBO', True, Var.BLACK)
+        # combo_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.combo), True,
+        #                                                                                           Var.DARK_GRAY)
 
         # 제거한 라인의 개수
         line_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('LINES', True, Var.BLACK)
         line_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(self.line), True,
                                                                                                   Var.DARK_GRAY)
+
+        # exp 경험치
+        exp_text = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_middle_in).render('EXP', True, Var.BLACK)
+        exp_value = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in).render(str(Var.exp), True,
+                                                                                                  Var.w_pink)
+
+
 
         self.screen.blit(next_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.next_loc))
@@ -678,14 +685,18 @@ class Board:
                                       self.block_size * self.height * Var.goal_val_loc))
 
         # 콤보 화면에 표시
-        self.screen.blit(combo_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
-                                      self.block_size * self.height * Var.combo_loc))
-        self.screen.blit(combo_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
-                                       self.block_size * self.height * Var.combo_val_loc))
+        # self.screen.blit(combo_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+        #                               self.block_size * self.height * Var.combo_loc))
+        # self.screen.blit(combo_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+        #                                self.block_size * self.height * Var.combo_val_loc))
         self.screen.blit(line_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.line_loc))
         self.screen.blit(line_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                       self.block_size * self.height * Var.line_val_loc))
+        self.screen.blit(exp_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+                                     self.block_size * self.height * Var.exp_loc))
+        self.screen.blit(exp_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
+                                      self.block_size * self.height * Var.exp_val_loc))
         self.screen.blit(time_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.time_loc))
         # 캐릭터 추가
