@@ -164,6 +164,8 @@ class Board:
                     self.board[y + self.piece_y][x + self.piece_x] = block
         self.nextpiece(self.mode)
         self.score += self.level
+        # 경험치도 갱신1
+        Var.exp += (self.score)/10
 
     def absorb_piece2(self):
         Var.block_fall.play()
@@ -173,6 +175,8 @@ class Board:
                     self.board[y + self.piece_y2][x + self.piece_x2] = block
         self.nextpiece2()
         self.score += self.level
+        # 경험치도 갱신2
+        #Var.exp +=(self.score)/1000000
 
     # 충돌 관련
     def block_collide_with_board(self, x, y):
