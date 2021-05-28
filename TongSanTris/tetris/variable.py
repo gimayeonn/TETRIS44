@@ -336,13 +336,13 @@ class Var:
     ## 메뉴 이미지 추가 부분
     # 테마명 변경
     menu_image = pygame_menu.baseimage.BaseImage(
-        image_path='assets/images/야미야미 테마.png',
+        image_path='assets/images/OSSP theme.png',
         drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL	)
     widget_image = pygame_menu.baseimage.BaseImage(
         image_path='assets/images/메인위젯.png',
         drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
     widget_image2 = pygame_menu.baseimage.BaseImage(
-        image_path='assets/images/위젯3.png',
+        image_path='assets/images/OSSP theme help.png',
         drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
     PATH=os.path.join('assets/images/메인메뉴2.png')
 
@@ -378,8 +378,8 @@ class Var:
     font_rate_main = 15          #메인 폰트 리사이징 비율
     font_rate_sub = 20           #서브 폰트들 리사이징 비율
     widget_rate_login = 15        #로그인 화면 리젯들 사이 간격 비율
-    widget_rate_main = 22        #메인 화면 리젯들 사이 간격 비율
-    widget_rate_showpage = 30   #showpage 위젯 간격 비율
+    widget_rate_main = 30        #메인 화면 리젯들 사이 간격 비율
+    widget_rate_showpage = 40   #showpage 위젯 간격 비율
     widget_rate_rank = 60       #rank페이지 위젯 간격 비율
     rate_main=6                 #메인 위젯 시작 하는 위치 비율
     rate_show=40                #show 위젯 시작 하는 위치 비율
