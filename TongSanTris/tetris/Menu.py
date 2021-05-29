@@ -186,7 +186,6 @@ class Menu:
         self.menu.add_button('   Select theme   ',self.change_theme,font_size=self.font_sub)
         self.menu.add_button('   Select BGM   ',self.change_base_bgm,font_size=self.font_sub)
         self.menu.add_button(' Log Out ', self.login_page, font_size=self.font_sub)
-        self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
 
     def show_game(self):  ## 게임 목록 들어가면 나오는 목록들
@@ -234,13 +233,18 @@ class Menu:
     # exp,char 변수 보여주기 
     def show_info(self):
         self.menu.clear()
-        self.menu.add_label("ID : " , font_size=self.font_sub)
+        self.menu.add_label("", font_size=self.font_sub)
+        self.menu.add_label("     ID     " , font_size=self.font_sub)
         self.menu.add_label(Var.user_id , font_size=self.font_sub)
-        self.menu.add_label("EXP : " , font_size=self.font_sub)
+        self.menu.add_label("     EXP     " , font_size=self.font_sub)
         self.menu.add_label(Var.exp , font_size=self.font_sub)
-        self.menu.add_label("CHAR : " , font_size=self.font_sub) 
+        if Var.exp < Var.being_level2_exp:
+            Var.char_level = 1
+        elif Var.exp >= Var.being_level2_exp and Var.exp < Var.being_level3_exp:
+            Var.char_level = 2
+        elif Var.exp >= Var.being_level3_exp:
+            Var.char_level = 3
         self.menu.add_image(Var.lst[Var.char_level - 1][0])
-
         self.menu.add_button(' back ', self.show_list,font_size=self.font_sub)
 
     def stop(self):
@@ -273,9 +277,9 @@ class Menu:
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_label("--Single Easy Rank--", selectable=False, font_size=self.font_main)
+        self.menu.add_label("Single Easy Rank", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
-        self.menu.add_button("       ID       Score", self.Mini_the_rank,font_size=self.font_sub)
+        self.menu.add_button("       ID       Score", self.pass_, font_size=self.font_sub)
         original_data = self.load_data("easy") # 오리지날 모드 데이터 받아오기
         for i in range(Var.rank_max) : #최대 몇명까지 보여줄건지 설정
             original_name=original_data[i]['ID']
@@ -291,9 +295,9 @@ class Menu:
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_rank
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_label("--Single Hard Rank--", selectable=False, font_size=self.font_main)
+        self.menu.add_label("Single Hard Rank", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
-        self.menu.add_button("       ID       Score", self.Mini_the_rank,font_size=self.font_sub)
+        self.menu.add_button("       ID       Score", self.pass_, font_size=self.font_sub)
         hard_data = self.load_data("hard")
         for i in range(Var.rank_max) :
             original_name=hard_data[i]['ID']
@@ -310,7 +314,7 @@ class Menu:
         self.mytheme.widget_margin=self.widget_margin_rank
         self.menu.add_vertical_margin(self.margin_main)
         twohadns_data = self.load_data("two")
-        self.menu.add_label("--Two Rank--",  selectable=False, font_size=self.font_main)
+        self.menu.add_label("Two Hands Rank",  selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
         for i in range(Var.rank_max):
@@ -327,7 +331,7 @@ class Menu:
         self.mytheme.widget_margin=self.widget_margin_rank
         mini_data = self.load_data("mini")
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_label("--Mini Rank--", selectable=False, font_size=self.font_main)
+        self.menu.add_label("Mini Rank", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
         for i in range(Var.rank_max):
@@ -344,7 +348,7 @@ class Menu:
         self.mytheme.widget_margin=self.widget_margin_rank
         big_data = self.load_data("big")
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_label("--Big Rank--", selectable=False, font_size=self.font_main)
+        self.menu.add_label("Big Rank", selectable=False, font_size=self.font_main)
         self.menu.add_vertical_margin(self.margin_rank)
         self.menu.add_button("       ID       Score", self.pass_,font_size=self.font_sub)
         for i in range(Var.rank_max):
@@ -425,7 +429,7 @@ class Menu:
         self.menu.clear()
         #menu = Var.menu_image
         #path = menu.get_path()
-        self.menu.add_button('Yami theme',self.theme_base,font_size=self.font_sub)
+        self.menu.add_button('Base theme',self.theme_base,font_size=self.font_sub)
         self.menu.add_button('Black theme',self.theme_black,font_size=self.font_sub)
         self.menu.add_button('back',self.show_list,font_size=self.font_sub)
 
