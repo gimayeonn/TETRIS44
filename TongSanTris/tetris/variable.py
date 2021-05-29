@@ -109,12 +109,13 @@ class Var:
     RED = (225, 13, 27)
     GREEN = (98, 190, 68)
     BLUE = (64, 111, 249)
-    ORANGE = (253, 189, 53)
+    ORANGE = (245, 115, 40)
     YELLOW = (246, 227, 90)
     PINK = (242, 64, 235)
     CYON = (70, 230, 210)
     GRAY = (26, 26, 26)
     DARK_GRAY = (55, 55, 55)
+    BROWN=(90,57,49)
     WHITE = (255, 255, 255)
     MAIN_BLUE = (62, 149, 195)
     MAIN_WHITE = (228, 230, 246)
@@ -163,6 +164,8 @@ class Var:
     initial_score = 0   # 시작 점수
     initial_level = 1   # 시작 레벨
     count_level = 1     #레벨 증가률
+    being_level2_exp=60000
+    being_level3_exp=140000
     goal_zero_state = 0  # 골수가 0이 된 상태
     level_goal_per = 3   #레벨당 목표 goal수
     initial_combo = 0    # 시작 콤보 및 초기화
@@ -239,6 +242,8 @@ class Var:
 
     two_board_two = 2 #보드 크기가 두 배인 모드에 곱하는 용
     center_divide = 2 # center 위치를 지정하기 위해 나누는 용
+    center_divide1 = 0.5
+    center_divide2=0.6
     board_text_divide = 7 #board text 위치 조정을 위함
     rect2_margin = 0.5 # 두번째 board칸 네모를 위한 margin
     rect2_margin_double = rect2_margin*2 #margin 두 배
@@ -349,7 +354,7 @@ class Var:
     #메뉴 기본 테마 만들기
 
     mytheme=pygame_menu.themes.THEME_ORANGE.copy()                  # 메뉴 기본 테마 설정
-    mytheme.widget_font_color=MAIN_VIOLET
+    mytheme.widget_font_color=BLACK
 
     # 메뉴 위젯 폰트 컬러
     mytheme.background_color = menu_image                           # 메뉴 배경 설정

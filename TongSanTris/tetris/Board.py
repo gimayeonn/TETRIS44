@@ -17,14 +17,12 @@ class Board:
         self.mode = mode
         self.start = time.time()
         self.char_time = 0
-        print(Var.exp)
-        if Var.exp<5000:
-            Var.char_level=1
-        elif Var.exp>=5000 and Var.exp<12000:
-            Var.char_level=2
-        elif Var.exp>=12000:
-            Var.char_level=3
-        print(Var.char_level)
+        if Var.exp < Var.being_level2_exp:
+            Var.char_level = 1
+        elif Var.exp >= Var.being_level2_exp and Var.exp < Var.being_level3_exp:
+            Var.char_level = 2
+        elif Var.exp >= Var.being_level3_exp:
+            Var.char_level = 3
         self.char_basic = pygame.transform.scale(pygame.image.load(Var.lst[Var.char_level - 1][0]),
                                             (Var.char_width, Var.char_height))
 
@@ -165,7 +163,7 @@ class Board:
         self.nextpiece(self.mode)
         self.score += self.level
         # 경험치도 갱신1
-        Var.exp += (self.score)/10
+        Var.exp += self.level
 
     def absorb_piece2(self):
         Var.block_fall.play()
@@ -176,7 +174,7 @@ class Board:
         self.nextpiece2()
         self.score += self.level
         # 경험치도 갱신2
-        #Var.exp +=(self.score)/1000000
+        Var.exp +=self.level
 
     # 충돌 관련
     def block_collide_with_board(self, x, y):
@@ -396,20 +394,31 @@ class Board:
                     self.score += self.level * self.combo * Var.combo_score_rate
                     self.score += Var.level_score_rate * self.level
                     self.score += 30
+                    Var.exp += self.level * self.combo * Var.combo_score_rate
+                    Var.exp += Var.level_score_rate * self.level
+                    Var.exp += 30
                     self.goal -= Var.count_goal
             elif self.mode == 'big' or 'two':
                     self.score += self.level * self.combo * Var.combo_score_rate # 콤보 *level * 10 만큼 점수 올려주기
                     self.score += Var.level_score_rate * self.level # level * 10 만큼 점수 올려주기
                     self.score += 20
+                    Var.exp += self.level * self.combo * Var.combo_score_rate
+                    Var.exp += Var.level_score_rate * self.level
+                    Var.exp += 20
                     self.goal -= Var.count_goal # level up까지 목표 골수 1만큼 내려주기
             elif self.mode == 'mini':
                     self.score += self.level * self.combo * Var.combo_score_rate
                     self.score += Var.level_score_rate * self.level
                     self.score += 10
+                    Var.exp += self.level * self.combo * Var.combo_score_rate
+                    Var.exp += Var.level_score_rate * self.level
+                    Var.exp += 10
                     self.goal -= Var.count_goal
             else:
                     self.score += self.level * self.combo * Var.combo_score_rate
                     self.score += Var.level_score_rate * self.level
+                    Var.exp += self.level * self.combo * Var.combo_score_rate
+                    Var.exp += Var.level_score_rate * self.level
                     self.goal -= Var.count_goal
 
 
@@ -587,6 +596,17 @@ class Board:
                 mat1[cy + off_y - Var.for_index_var][cx + off_x] += val
         return mat1
 
+    def update_character(self):
+        if Var.exp < Var.being_level2_exp:
+            Var.char_level = 1
+        elif Var.exp >= Var.being_level2_exp and Var.exp < Var.being_level3_exp:
+            Var.char_level = 2
+        elif Var.exp >= Var.being_level3_exp:
+            Var.char_level = 3
+        self.char_basic = pygame.transform.scale(pygame.image.load(Var.lst[Var.char_level - 1][0]),
+                                                 (Var.char_width, Var.char_height))
+        self.char_lineclear = pygame.transform.scale(pygame.image.load(Var.lst[Var.char_level - 1][1]),
+                                                     (Var.char_width, Var.char_height))
 
     # 보드 내 필요한 내용들 넣어주기
     def draw(self, tetris, mode):
@@ -705,6 +725,7 @@ class Board:
                                      self.block_size * self.height * Var.time_loc))
         # 캐릭터 추가
 
+        self.update_character()
         self.screen.blit(self.character, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.char_loc))
         if (time.time() - self.char_time) > 1.2 :
@@ -767,12 +788,17 @@ class Board:
     def pause(self):
 
         fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in * Var.font_size_double)  # 글씨 폰트 설정
-        textSurfaceObj = fontObj.render('P : Back To Game Q : Quit', True, Var.WHITE)  # 위 폰트로 초록색 글씨
+        textSurfaceObj = fontObj.render('P : Back To Game', True, Var.RED)
         textRectObj = textSurfaceObj.get_rect()
-        textRectObj.center = ((self.width*1.5) * self.block_size / Var.center_divide, self.display_height / Var.center_divide)
+        textRectObj.center = ((self.width*1.5) * self.block_size / Var.center_divide, self.display_height * Var.center_divide1)
+
+        textSurfaceObj2 = fontObj.render('Q : Quit Game', True, Var.RED)
+        textRectObj2 = textSurfaceObj.get_rect()
+        textRectObj2.center = ((self.width * 1.5) * self.block_size / Var.center_divide, self.display_height * Var.center_divide2)
 
         # 스크린에 표시
         self.screen.blit(textSurfaceObj, textRectObj)
+        self.screen.blit(textSurfaceObj2, textRectObj2)
         pygame.display.update()
 
         running = True
@@ -796,7 +822,7 @@ class Board:
         pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h))
         fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', Var.myscore_font)
         # 경험치 부여
-        Var.exp += self.score/10
+        Var.exp += self.score
         print(Var.exp)
         self.database.update_exp_data(Var.exp,Var.user_id)
         if Var.theme_num==1:
