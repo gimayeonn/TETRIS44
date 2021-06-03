@@ -456,13 +456,13 @@ class Menu:
 
     def theme_base(self):
         Var.menu_image = pygame_menu.baseimage.BaseImage(
-            image_path='assets/images/야미야미 테마.png',
+            image_path='assets/images/OSSP theme.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL	)
         Var.mytheme.background_color = Var.menu_image
-        Var.mytheme.widget_font_color=Var.MAIN_VIOLET
+        Var.mytheme.widget_font_color=Var.BLACK
         Var.mytheme.widget_font = pygame_menu.font.FONT_NEVIS
         Var.mytheme_help.background_color = pygame_menu.baseimage.BaseImage(
-            image_path='assets/images/위젯3.png',
+            image_path='assets/images/OSSP theme help.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
 
 
