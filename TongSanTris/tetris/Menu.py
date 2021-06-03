@@ -45,6 +45,8 @@ class Menu:
 
     def run(self):   # 실행하는 함수
         print('test2')
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page=Var.initial_page   #시작하면 기본 모드로 모드가 설정
         self.menu.clear()
         self.mytheme.widget_margin=self.widget_margin_login
@@ -59,7 +61,6 @@ class Menu:
         self.page = 'page0'
         self.mytheme.widget_margin = self.widget_margin_login
         Var.click.play()
-        self.page = Var.initial_page
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
         self.menu.add_button('  Sign Up  ', self.signup_page, font_size=self.font_sub)
@@ -189,6 +190,8 @@ class Menu:
 
 
     def show_game(self):  ## 게임 목록 들어가면 나오는 목록들
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page4'
         Var.click.play()
         self.menu.clear()
@@ -204,6 +207,8 @@ class Menu:
         self.menu.add_button('           back            ', self.show_list,font_size=self.font_sub)
 
     def select_single(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page12'
         Var.click.play()
         self.menu.clear()
@@ -216,6 +221,8 @@ class Menu:
         self.menu.add_button('           back            ', self.show_game,font_size=self.font_sub)
 
     def show_rank(self):  ## 랭크 들어가면 나오는 목록들기
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page5'
         Var.click.play()
         self.menu.clear()
@@ -232,6 +239,8 @@ class Menu:
 
     # exp,char 변수 보여주기 
     def show_info(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.menu.clear()
         self.menu.add_label("", font_size=self.font_sub)
         self.menu.add_label("     ID     " , font_size=self.font_sub)
@@ -272,6 +281,8 @@ class Menu:
         return data
 
     def Single_the_rank(self): #기본 이지 모드 랭크 보는 화면
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page7'
         Var.click.play()
         self.menu.clear()
@@ -290,6 +301,8 @@ class Menu:
 
 
     def Single_hard_rank(self): #기본 하드 모드 랭크 보는 화면
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page13'
         Var.click.play()
         self.menu.clear()
@@ -308,6 +321,8 @@ class Menu:
 
 
     def Twohands_the_rank(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page8'
         Var.click.play()
         self.menu.clear()
@@ -325,6 +340,8 @@ class Menu:
         self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
 
     def Mini_the_rank(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page9'
         Var.click.play()
         self.menu.clear()
@@ -342,6 +359,8 @@ class Menu:
         self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
 
     def Big_the_rank(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
         self.page='page10'
         Var.click.play()
         self.menu.clear()
@@ -361,9 +380,9 @@ class Menu:
 
 
     def help(self): # help 페이지
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme2)
         self.page='page11'
-        self.surface = pygame.display.set_mode(Var.help_screen)
-        self.menu = pygame_menu.Menu(Var.help_h, Var.help_w, '', theme=self.mytheme2)
         self.menu.add_vertical_margin(self.margin_help)
         self.menu.add_button(' back ', self.show_list,font_size=self.font_sub)
 
