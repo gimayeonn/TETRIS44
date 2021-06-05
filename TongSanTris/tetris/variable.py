@@ -164,8 +164,9 @@ class Var:
     initial_score = 0   # 시작 점수
     initial_level = 1   # 시작 레벨
     count_level = 1     #레벨 증가률
-    being_level2_exp=60000
-    being_level3_exp=140000
+    char_change_time=1.5
+    being_level2_exp= 50
+    being_level3_exp= 100
     goal_zero_state = 0  # 골수가 0이 된 상태
     level_goal_per = 3   #레벨당 목표 goal수
     initial_combo = 0    # 시작 콤보 및 초기화
@@ -259,8 +260,6 @@ class Var:
     level_val_loc = 0.48
     goal_loc = 0.54
     goal_val_loc = 0.58
-    #combo_loc = 0.64
-    #combo_val_loc = 0.68
     line_loc = 0.64
     line_val_loc = 0.68
     exp_loc = 0.74
@@ -358,7 +357,6 @@ class Var:
 
     # 메뉴 위젯 폰트 컬러
     mytheme.background_color = menu_image                           # 메뉴 배경 설정
-    #mytheme.widget_background_color = widget_image                 # 메뉴 위젯 배경 설정
     mytheme.title_bar_style=pygame_menu.widgets.MENUBAR_STYLE_NONE  # 메뉴 타이틀 바 모양 설정
     mytheme.widget_alignment=pygame_menu.locals.ALIGN_CENTER        # 메뉴 가운데 정렬 설정
     mytheme.widget_font =pygame_menu.font.FONT_NEVIS                # 메뉴 폰트 설정
@@ -438,17 +436,6 @@ class Var:
 
     lst = char1_lst
 
-
-    #def getBasic(num,level,char_width,char_height):
-    #    if num==1:
-    #        lst = char1_lst
-    #    elif num==2:
-    #        lst = char2_lst
-    #    else:
-    #        lst = char3_lst
-    #
-    #    image = pygame.transform.scale(pygame.image.load(lst[level-1][0]),                                    (char_width,char_height))
-    #    return image
 
     theme_num=1
 

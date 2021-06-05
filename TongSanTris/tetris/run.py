@@ -60,6 +60,10 @@ while True:
                 mymenu.select_single()
             elif mymenu.page=='page13':
                 mymenu.Single_hard_rank()
+            elif mymenu.page=='page14':
+                mymenu.signup_fail()
+            elif mymenu.page=='page15':
+                mymenu.login_fail()
     if mymenu.menu.is_enabled():
         mymenu.menu.update(events)
         mymenu.menu.draw(mymenu.surface)
