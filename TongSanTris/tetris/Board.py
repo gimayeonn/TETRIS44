@@ -8,7 +8,6 @@ from Menu import *
 
 
 
-
 class Board:
     # 충돌에러
     COLLIDE_ERROR = Var.error_type
@@ -81,15 +80,12 @@ class Board:
         self.database = Database()
 
         # 상태 줄 정보
-        # (self.width*self.block_size) = self.width * self.block_size
         self.start_status_bar_y = Var.start_status_bar_y
         if mode == 'two':
             self.status_width = self.block_size * self.status_size
         else:
             self.status_width = self.block_size * self.status_size
-        # (self.height*self.block_size) = self.height * self.block_size
 
-        # (self.width * self.block_size + self.display_width / 2) = self.width * self.block_size + self.display_width / 2
         self.ai_start_status_bar_y = Var.start_status_bar_y
 
         self.font_size_small_in = Var.font_size_small
@@ -707,12 +703,6 @@ class Board:
                                      self.block_size * self.height * Var.goal_loc))
         self.screen.blit(goal_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                       self.block_size * self.height * Var.goal_val_loc))
-
-        # 콤보 화면에 표시
-        # self.screen.blit(combo_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
-        #                               self.block_size * self.height * Var.combo_loc))
-        # self.screen.blit(combo_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
-        #                                self.block_size * self.height * Var.combo_val_loc))
         self.screen.blit(line_text, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.line_loc))
         self.screen.blit(line_value, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
@@ -728,7 +718,7 @@ class Board:
         self.update_character()
         self.screen.blit(self.character, ((self.width * self.block_size) + self.status_width / Var.board_text_divide,
                                      self.block_size * self.height * Var.char_loc))
-        if (time.time() - self.char_time) > 1.2 :
+        if (time.time() - self.char_time) > Var.char_change_time:
             self.character = self.char_basic
 
 

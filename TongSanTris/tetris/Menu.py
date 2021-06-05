@@ -82,42 +82,54 @@ class Menu:
         self.menu.add_button('        Quit         ', pygame_menu.events.EXIT,font_size=self.font_sub)
 
 
-
     def login(self):
         if self.id:
-            if self.password and self.database.compare_data(self.id, self.password):
-                # 현재 선택 캐릭터가 없다면 캐릭터 선택 (char변수 할당) (아직 미구현)
-                char = self.database.load_char_data(self.id)
-                if char is None:
-                    print("select char")
-                    self.menu.clear()
-                    #self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
-                    path = "assets/images/"
-                    self.menu.add_button('1) Elephant', self.set_char1,font_size=self.font_sub)
-                    self.menu.add_image(Var.char1_lst[0][0])
-                    self.menu.add_button('2) Chicken', self.set_char2,font_size=self.font_sub)
-                    self.menu.add_image(Var.char2_lst[0][0])
-                    self.menu.add_button('3) Butterfly', self.set_char3, font_size=self.font_sub)
-                    self.menu.add_image(Var.char3_lst[0][0])
-                    self.menu.add_button('  back  ', self.login_page, font_size=self.font_sub)
+            if self.database.id_not_exists(self.id) is False:
+                if self.password and self.database.compare_data(self.id, self.password):
+                    char = self.database.load_char_data(self.id)
+                    if char is None:
+                        print("select char")
+                        self.menu.clear()
+                        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
+                        self.mytheme.widget_margin = self.widget_margin_rank
+                        self.menu.add_label("")
+                        self.menu.add_button('1) Elephant', self.set_char1,font_size=self.font_sub)
+                        self.menu.add_image(Var.char1_lst[0][0])
+                        self.menu.add_button('2) Chicken', self.set_char2,font_size=self.font_sub)
+                        self.menu.add_image(Var.char2_lst[0][0])
+                        self.menu.add_button('3) Butterfly', self.set_char3, font_size=self.font_sub)
+                        self.menu.add_image(Var.char3_lst[0][0])
+                    else:
+                        self.show_list()
+
+                    # 계정의 exp,char 값 가져오기
+                    Var.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
+                    Var.char=self.database.load_char_data(self.id)
+                    if char==1:
+                        Var.lst = Var.char1_lst
+                    elif char==2:
+                        Var.lst = Var.char2_lst
+                    elif char==3:
+                        Var.lst = Var.char3_lst
+                    Var.user_id = self.id
+
                 else:
-                    self.show_list()
-
-                # 계정의 exp,char 값 가져오기
-                Var.exp=self.database.load_exp_data(self.id) #로그인 성공하면 경험치 데이터베이스에서 받아오기
-                Var.char=self.database.load_char_data(self.id)
-                if char==1:
-                    Var.lst = Var.char1_lst
-                elif char==2:
-                    Var.lst = Var.char2_lst
-                elif char==3:
-                    Var.lst = Var.char3_lst
-                Var.user_id = self.id
-
+                    self.login_page()
             else:
-                self.login_page()
+                self.login_fail()
         else:
             self.login_page()
+
+    def login_fail(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
+        self.page = 'page15'
+        self.mytheme.widget_margin = self.widget_margin_login
+        Var.click.play()
+        self.menu.clear()
+        self.menu.add_vertical_margin(self.margin_main)
+        self.menu.add_label("    ID does not Exist     ", selectable=False, font_size=self.font_main)
+        self.menu.add_button('  back  ', self.login_page, font_size=self.font_main)
 
     def set_char1(self):
         Var.char = 1
@@ -150,7 +162,23 @@ class Menu:
 
     def save_id(self,value): #아이디 데이터베이스에 저장
         self.id=value
-        self.database.add_id_data(self.id)
+        if self.database.id_not_exists(self.id):
+            self.database.add_id_data(self.id)
+        else:
+            self.signup_fail()
+
+
+    def signup_fail(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
+        self.page = 'page14'
+        self.mytheme.widget_margin = self.widget_margin_login
+        Var.click.play()
+        self.menu.clear()
+        self.menu.add_vertical_margin(self.margin_main)
+        self.menu.add_label("    ID Already Exists     ", selectable=False, font_size=self.font_main)
+        self.menu.add_button('  back  ', self.signup_page, font_size=self.font_main)
+
 
     def save_password(self,value): #비밀번호 데이터베이스에 저장
         self.password=value
@@ -358,6 +386,7 @@ class Menu:
             self.menu.add_button(r, self.pass_, font_size=self.font_sub)
         self.menu.add_button('back', self.show_rank,font_size=self.font_sub)
 
+
     def Big_the_rank(self):
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
         self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
@@ -393,7 +422,7 @@ class Menu:
         self.tetris.run()
         self.menu.clear()
         self.show_game()
-        #self.show_score(self.Mode,self.tetris.Score)
+
 
     def start_the_hard(self): # 클릭시 게임 실행 끝나면 기록 화면 보여주기
         Var.click.play()
@@ -402,7 +431,7 @@ class Menu:
         self.tetris.run()
         self.menu.clear()
         self.show_game()
-        #self.show_score(self.Mode,self.tetris.Score)
+
 
     def start_the_Mini(self):
         Var.click.play()
@@ -411,7 +440,7 @@ class Menu:
         self.tetris.run()
         self.menu.clear()
         self.show_game()
-        #self.show_score(self.Mode,self.tetris.Score)
+
 
     def start_the_Big(self):
         Var.click.play()
@@ -420,7 +449,7 @@ class Menu:
         self.tetris.run()
         self.menu.clear()
         self.show_game()
-        #self.show_score(self.Mode,self.tetris.Score)
+
 
     def start_the_Twohands(self):
         Var.click.play()
@@ -429,7 +458,7 @@ class Menu:
         self.tetris.run()
         self.menu.clear()
         self.show_game()
-        #self.show_score(self.Mode,self.tetris.Score)
+
 
     def start_the_Ai(self):
         Var.click.play()
@@ -446,8 +475,6 @@ class Menu:
     def change_theme(self):
         #self.page='page8'
         self.menu.clear()
-        #menu = Var.menu_image
-        #path = menu.get_path()
         self.menu.add_button('Base theme',self.theme_base,font_size=self.font_sub)
         self.menu.add_button('Black theme',self.theme_black,font_size=self.font_sub)
         self.menu.add_button('back',self.show_list,font_size=self.font_sub)
@@ -476,7 +503,6 @@ class Menu:
         Var.mytheme_help.background_color = pygame_menu.baseimage.BaseImage(
             image_path='assets/images/Keyset2.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL)
-        #Var.mytheme=pygame_menu.themes.THEME_BLUE.copy
         Var.theme_num=2
 
 
