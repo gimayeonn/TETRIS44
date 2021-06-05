@@ -36,6 +36,7 @@ class Menu:
         self.id
 
 
+
 #add_button 이거는 선택하는 버튼 만들기
 #clear()는 초기화하기
 #add_vertical_margin 위에서 부터 간격 설정하기
