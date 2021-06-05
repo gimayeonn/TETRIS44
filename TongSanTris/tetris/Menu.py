@@ -114,11 +114,23 @@ class Menu:
                     Var.user_id = self.id
 
                 else:
-                    self.login_page()
+                    self.password_fail()
             else:
                 self.login_fail()
         else:
             self.login_page()
+
+    def password_fail(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
+        self.page = 'page16'
+        self.mytheme.widget_margin = self.widget_margin_login
+        Var.click.play()
+        self.menu.clear()
+        self.menu.add_vertical_margin(self.margin_main)
+        self.menu.add_label("    Password Incorrect     ", selectable=False, font_size=self.font_main)
+        self.menu.add_button('  back  ', self.login_page, font_size=self.font_main)
+
 
     def login_fail(self):
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
@@ -485,6 +497,7 @@ class Menu:
         Var.menu_image = pygame_menu.baseimage.BaseImage(
             image_path='assets/images/OSSP theme.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL	)
+        Var.theme_num=1
         Var.mytheme.background_color = Var.menu_image
         Var.mytheme.widget_font_color=Var.BLACK
         Var.mytheme.widget_font = pygame_menu.font.FONT_NEVIS
@@ -497,6 +510,7 @@ class Menu:
         Var.menu_image = pygame_menu.baseimage.BaseImage(
             image_path='assets/images/main2.png',
             drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL	)
+        Var.theme_num = 2
         Var.mytheme.background_color = Var.menu_image
         Var.mytheme.widget_font_color=Var.DARK_GRAY
         Var.mytheme.widget_font = pygame_menu.font.FONT_MUNRO
