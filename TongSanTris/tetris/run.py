@@ -32,7 +32,7 @@ while True:
             mymenu.widget_margin_rank = (Var.widget_center, int((mymenu.h) / Var.widget_rate_rank))
 
             time.sleep(Var.sleep_time) # 페이지 변환 너무 빨라 렉걸리는 거 방지하기 위해 없어도 큰 상관 없음
-            if mymenu.page=='page0': #리사이징 후 원래 페이지로 돌아가기
+            if mymenu.page=='page0':
                 mymenu.run()
             elif mymenu.page=='page1':
                 mymenu.login_page()
