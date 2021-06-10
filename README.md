@@ -10,9 +10,13 @@ tetris made with pygame
 
 
 Base Source
+
 주소 : https://github.com/CSID-DGU/2020-2-OSSP-CP--YamiYami_Z_Z-5
+
 License : MIT
+
 python 3.7
+
 pygame = 1.9.3
 
 
@@ -33,14 +37,18 @@ aws 프리티어를 이용하여 데이터베이스를 구성
 ### <회원가입>
 
 ID -> Enter
+
 PW -> Enter
+
 Sign up -> Enter
 
 
 ### <로그인>
 
 ID -> Enter
+
 PW -> Enter
+
 Sign in -> Enter
 
 
