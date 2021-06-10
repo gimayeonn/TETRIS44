@@ -21,43 +21,54 @@ pygame = 1.9.3
 
 
 
+
 ### <게임 실행 방식>
 
-현재 repository의 소스 코드를 모두 다운 또는 clone을 통해 local에 저장
+  현재 repository의 소스 코드를 모두 다운 또는 clone을 통해 local에 저장
 
-추가 모듈에 표기한 모듈들을 다운 받고 run.py에서 실행
+  추가 모듈에 표기한 모듈들을 다운 받고 run.py에서 실행
+
 
 
 
 ### <AWS 데이터베이스>
 
-aws 프리티어를 이용하여 데이터베이스를 구성
+  aws 프리티어를 이용하여 데이터베이스를 구성
 
-따라서 테스트가 필요할 경우, 본인 aws 계정으로 로그인 후 실행 
+  따라서 테스트가 필요할 경우, 본인 aws 계정으로 로그인 후 실행 
 
-(database_user.py 계정정보 수정)
+  (database_user.py 계정정보 수정)
+
 
 
 
 ### <회원가입>
 
-ID -> Enter
+  ID -> Enter
 
-PW -> Enter
+  PW -> Enter
 
-Sign up -> Enter
+  Sign up -> Enter
+
 
 
 
 ### <로그인>
 
-ID -> Enter
+  ID -> Enter
 
-PW -> Enter
+  PW -> Enter
 
-Sign in -> Enter
-
-
+  Sign in -> Enter
 
 
+
+
+### <게임 화면>
+
+  ![image](https://user-images.githubusercontent.com/63901647/121522975-a88d3700-ca30-11eb-94e7-b6e424be65ff.png)
+
+  ![image](https://user-images.githubusercontent.com/63901647/121523001-b0e57200-ca30-11eb-9714-1a189682e35c.png)
+
+![image](https://user-images.githubusercontent.com/63901647/121523010-b478f900-ca30-11eb-8031-b0f7f8c07d95.png)
 
