@@ -44,7 +44,7 @@ pygame = 1.9.3
 
 ### <회원가입>
 
-  ID -> Enter
+  - ID -> Enter
 
   PW -> Enter
 
