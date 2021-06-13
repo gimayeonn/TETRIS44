@@ -13,7 +13,7 @@ Base Source
 
 주소 : https://github.com/CSID-DGU/2020-2-OSSP-CP--YamiYami_Z_Z-5
 
-License : MIT
+License : GPLv3
 
 python 3.6
 
