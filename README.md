@@ -46,20 +46,20 @@ pygame = 1.9.3
 
   - ID -> Enter
 
-  PW -> Enter
+  - PW -> Enter
 
-  Sign up -> Enter
+  - Sign up -> Enter
 
 
 
 
 ### <로그인>
 
-  ID -> Enter
+  - ID -> Enter
 
-  PW -> Enter
+  - PW -> Enter
 
-  Sign in -> Enter
+  - Sign in -> Enter
 
 
 
