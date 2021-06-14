@@ -302,8 +302,7 @@ class Menu:
         self.menu.disable()
 
     def load_data(self, game_mode): #랭크 점수 데이터 불러오기
-        # self.database.__init__()
-        # 이렇게 하면 랭크업데이트 되는데 DB에 연결이 너무 많아져서 테스트때는 주석처리하고 제출할 때 주석 풀고 제출
+        self.database.__init__()
         #불러 오기
         curs = self.database.score_db.cursor(pymysql.cursors.DictCursor)
         if game_mode == 'easy':
