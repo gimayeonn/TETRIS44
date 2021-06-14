@@ -66,6 +66,8 @@ while True:
                 mymenu.login_fail()
             elif mymenu.page=='page16':
                 mymenu.password_fail()
+            elif mymenu.page=='page17':
+                mymenu.select_character()
     if mymenu.menu.is_enabled():
         mymenu.menu.update(events)
         mymenu.menu.draw(mymenu.surface)

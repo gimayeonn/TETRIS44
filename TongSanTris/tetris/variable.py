@@ -267,10 +267,7 @@ class Var:
 
     # 변경
     time_loc = 0.25
-    # 추가
-    char_loc = 0.8
-    char_width = 100
-    char_height = 100
+    
 
     font_size_small = 14    #폰트 사이즈 작은거
     font_size_middle = 16   #중간
@@ -295,6 +292,12 @@ class Var:
     myscore_display=(160,270)
     myscore_font=50
     combo_reset_time=10  # 콤보 초기화 시간
+
+    # 추가
+    char_loc = 0.8
+    char_width = int((menu_display_h) / 6) 
+    char_height = int((menu_display_w) / 6)
+
 
     # 기본 사이즈 조정
     basic_width = 10  #맵의 좌에서 우로 사이즈

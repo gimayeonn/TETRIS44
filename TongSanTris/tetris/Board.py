@@ -603,7 +603,11 @@ class Board:
                                                  (Var.char_width, Var.char_height))
         self.char_lineclear = pygame.transform.scale(pygame.image.load(Var.lst[Var.char_level - 1][1]),
                                                      (Var.char_width, Var.char_height))
+        Var.menu_display_w, Var.menu_display_h = pygame.display.get_surface().get_size()
+        Var.char_width = int((Var.menu_display_h) / 6) 
+        Var.char_height = int((Var.menu_display_w) / 6)
 
+    
     # 보드 내 필요한 내용들 넣어주기
     def draw(self, tetris, mode):
         # 경과 시간 추가
@@ -777,22 +781,31 @@ class Board:
     # 게임 일시정지
     def pause(self):
 
-        fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', self.font_size_small_in * Var.font_size_double)  # 글씨 폰트 설정
-        textSurfaceObj = fontObj.render('P : Back To Game', True, Var.RED)
-        textRectObj = textSurfaceObj.get_rect()
-        textRectObj.center = ((self.width*1.5) * self.block_size / Var.center_divide, self.display_height * Var.center_divide1)
+    
+        
 
-        textSurfaceObj2 = fontObj.render('Q : Quit Game', True, Var.RED)
-        textRectObj2 = textSurfaceObj.get_rect()
-        textRectObj2.center = ((self.width * 1.5) * self.block_size / Var.center_divide, self.display_height * Var.center_divide2)
-
-        # 스크린에 표시
-        self.screen.blit(textSurfaceObj, textRectObj)
-        self.screen.blit(textSurfaceObj2, textRectObj2)
-        pygame.display.update()
-
+        
+        
         running = True
         while running:
+            Var.menu_display_w, Var.menu_display_h = pygame.display.get_surface().get_size()
+            Var.menu_display_w = max(Var.min_display_w,Var.menu_display_w)
+            Var.menu_display_h = max(Var.min_display_h,Var.menu_display_h)
+            self.screen = pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h), RESIZABLE)
+            fontObj = pygame.font.Font('assets/Roboto-Bold.ttf', int(self.font_size_small_in * Var.font_size_double*Var.menu_display_w/600))  # 글씨 폰트 설정
+            textSurfaceObj = fontObj.render('P : Back To Game', True, Var.RED)
+            textRectObj = textSurfaceObj.get_rect()
+            textRectObj.center = (Var.menu_display_w / Var.center_divide, Var.menu_display_h * Var.center_divide1)
+
+            
+            textSurfaceObj2 = fontObj.render('Q : Quit Game', True, Var.RED)
+            textRectObj2 = textSurfaceObj.get_rect()
+            textRectObj2.center = (Var.menu_display_w / Var.center_divide, Var.menu_display_h * Var.center_divide2)
+
+            # 스크린에 표시
+            self.screen.blit(textSurfaceObj, textRectObj)
+            self.screen.blit(textSurfaceObj2, textRectObj2)
+            pygame.display.update()
             for event in pygame.event.get():
                 if event.type == QUIT:
                     pygame.quit()
@@ -801,12 +814,16 @@ class Board:
                     pygame.quit()
                     sys.exit()
                 elif event.type == KEYUP and event.key == K_p:  # p 누르면 다시 시작
+                    Var.menu_display_w, Var.menu_display_h = pygame.display.get_surface().get_size()
+                    self.screen = pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h), RESIZABLE)
+                    
                     if self.mode == 'ai':
                         Var.ai_bgm.play()
                     else:
                         Var.base_bgm.play()
                     running = False
 
+            
     # 게임 끝나면 점수 보여주는 곳
     def show_my_score(self):
         pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h))
