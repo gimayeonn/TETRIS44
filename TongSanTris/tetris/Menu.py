@@ -89,17 +89,8 @@ class Menu:
                 if self.password and self.database.compare_data(self.id, self.password):
                     char = self.database.load_char_data(self.id)
                     if char is None:
-                        print("select char")
-                        self.menu.clear()
-                        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
-                        self.mytheme.widget_margin = self.widget_margin_rank
-                        self.menu.add_label("")
-                        self.menu.add_button('1) Elephant', self.set_char1,font_size=self.font_sub)
-                        self.menu.add_image(Var.char1_lst[0][0])
-                        self.menu.add_button('2) Chicken', self.set_char2,font_size=self.font_sub)
-                        self.menu.add_image(Var.char2_lst[0][0])
-                        self.menu.add_button('3) Butterfly', self.set_char3, font_size=self.font_sub)
-                        self.menu.add_image(Var.char3_lst[0][0])
+                        print("select_character()")
+                        self.select_character()
                     else:
                         self.show_list()
 
@@ -120,6 +111,23 @@ class Menu:
                 self.login_fail()
         else:
             self.login_page()
+
+
+    def select_character(self):
+        self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)
+        self.menu = pygame_menu.Menu(self.h, self.w, '', theme=self.mytheme)
+        self.page = 'page17'
+        self.mytheme.widget_margin = self.widget_margin_rank
+        Var.menu_display_w, Var.menu_display_h = pygame.display.get_surface().get_size()
+        self.char_w = max((Var.menu_display_w) / 600,0.5)
+        self.char_h = max((Var.menu_display_h) / 600,0.5)
+        self.menu.add_label("")
+        self.menu.add_button('1) Elephant', self.set_char1,font_size=self.font_sub)
+        self.menu.add_image(Var.char1_lst[0][0],scale=(self.char_w,self.char_h))
+        self.menu.add_button('2) Chicken', self.set_char2,font_size=self.font_sub)
+        self.menu.add_image(Var.char2_lst[0][0],scale=(self.char_w,self.char_h))
+        self.menu.add_button('3) Butterfly', self.set_char3, font_size=self.font_sub)
+        self.menu.add_image(Var.char3_lst[0][0],scale=(self.char_w,self.char_h))
 
     def password_fail(self):
         self.surface = pygame.display.set_mode((self.w, self.h), RESIZABLE)

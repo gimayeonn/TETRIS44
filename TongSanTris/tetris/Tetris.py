@@ -315,6 +315,7 @@ class Tetris:
                     Var.base_bgm2.stop()
                     Var.ai_bgm.stop()  # 일시 정지 노래 중둠    오류나서  일단 뺴
                     self.board.pause()
+                    self.run()
 
 
                 elif event.type == KEYDOWN:  # 키보드를 누르면
