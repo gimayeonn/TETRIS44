@@ -780,12 +780,6 @@ class Board:
                              (self.block_size) * j), Var.ai_line_size)
     # 게임 일시정지
     def pause(self):
-
-    
-        
-
-        
-        
         running = True
         while running:
             Var.menu_display_w, Var.menu_display_h = pygame.display.get_surface().get_size()
@@ -797,7 +791,6 @@ class Board:
             textRectObj = textSurfaceObj.get_rect()
             textRectObj.center = (Var.menu_display_w / Var.center_divide, Var.menu_display_h * Var.center_divide1)
 
-            
             textSurfaceObj2 = fontObj.render('Q : Quit Game', True, Var.RED)
             textRectObj2 = textSurfaceObj.get_rect()
             textRectObj2.center = (Var.menu_display_w / Var.center_divide, Var.menu_display_h * Var.center_divide2)
@@ -816,7 +809,6 @@ class Board:
                 elif event.type == KEYUP and event.key == K_p:  # p 누르면 다시 시작
                     Var.menu_display_w, Var.menu_display_h = pygame.display.get_surface().get_size()
                     self.screen = pygame.display.set_mode((Var.menu_display_w, Var.menu_display_h), RESIZABLE)
-                    
                     if self.mode == 'ai':
                         Var.ai_bgm.play()
                     else:
