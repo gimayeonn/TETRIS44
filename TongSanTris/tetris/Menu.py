@@ -137,7 +137,7 @@ class Menu:
         Var.click.play()
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_label("    Password Incorrect     ", selectable=False, font_size=self.font_main)
+        self.menu.add_label("   ID or Password Incorrect     ", selectable=False, font_size=self.font_sub)
         self.menu.add_button('  back  ', self.login_page, font_size=self.font_main)
 
 
@@ -149,7 +149,7 @@ class Menu:
         Var.click.play()
         self.menu.clear()
         self.menu.add_vertical_margin(self.margin_main)
-        self.menu.add_label("    ID does not Exist     ", selectable=False, font_size=self.font_main)
+        self.menu.add_label("   ID or Password Incorrect     ", selectable=False, font_size=self.font_sub)
         self.menu.add_button('  back  ', self.login_page, font_size=self.font_main)
 
     def set_char1(self):
