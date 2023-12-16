@@ -1,17 +1,8 @@
-# 2021-1-OSSPC-Tongsan1-2
-
-[![GitHub license](https://img.shields.io/badge/license-GPLv3-lightgrey.svg)](https://github.com/CSID-DGU/2021-1-OSSPC-Tongsan1-2/LICENSE)
-[![OS](https://img.shields.io/badge/OS-ubuntu-red)](https://ubuntu.com)
-[![Python version](https://img.shields.io/badge/python-3.6.0-brightgreen.svg)](https://www.python.org)
-[![Pygame version](https://img.shields.io/badge/pygame-1.9.3-yellow.svg)](http://pygame.org)  
-tetris made with pygame  
-**Team Leader**: [Jeong-pil](https://github.com/jeong-pil)
-**Team Member**: [Yu-ha](https://github.com/jiyuha), [Byeong-chan](https://github.com/oxox97)  
+# TETRIS44
+오픈소스프로그래밍 고효율 팀입니다.
 
 
-Base Source
-
-주소 : https://github.com/CSID-DGU/2020-2-OSSP-CP--YamiYami_Z_Z-5
+오픈소스코드 주소 : https://github.com/CSID-DGU/2020-2-OSSP-CP--YamiYami_Z_Z-5
 
 License : GPLv3
 
@@ -19,17 +10,45 @@ python 3.6
 
 pygame = 1.9.3
 
-## 개선점
-- 기존 단판성 성격이 강한 테트리스에 육성 요소를 가미
-- 자신의 계정의 경험치를 올리며 캐릭터 진화하는 재미
-- 자신의 컴퓨터가 아닌 곳에서도 로그인 후 게임 가능
-- 다양한 테마 선택으로 지루하지 않은 게임
+1. 목적
 
-## 게임 실행 방식
+   기존의 테트리스 게임에 추가적인 기능을 구현하여, 더 발전된 테트리스 게임을 만들기 위함이다.
 
-  - 현재 repository의 소스 코드를 모두 다운 또는 clone을 통해 local에 저장
+   오픈소스코드 주소 : https://github.com/CSID-DGU/2020-2-OSSP-CP--YamiYami_Z_Z-5
 
-  - 추가 모듈에 표기한 모듈들을 다운 받고 run.py에서 실행
+     <추가 기능>
+     - AWS의 RDS와 MySQL을 이용한 회원가입/로그인 기능 구현
+     - 모드별 랭킹 구현 및 랭킹 실시간 업데이트 기능 구현
+     - 캐릭터 선택 기능 + 진화 구현
+     - BGM 선택
+
+3. 게임 실행 방식
+   1. 현재 repository의 소스 코드를 모두 다운 또는 clone을 통해 local에 저장한다.
+   2. 추가 모듈에 표기한 모듈들을 다운 받고 run.py에서 실행한다.
+
+4. 조작 방식
+
+   a, 왼쪽 방향키 : 블럭을 왼쪽으로 한칸 이동시킨다   
+   
+   d, 오른쪽 방향키 : 블럭을 오른쪽으로 한칸 이동시킨다 
+   
+   w, 위쪽 방향키 : 블럭을 오른쪽으로 90도 회전시킨다
+   
+   s, 아래쪽 방향키 : 블럭을 아래쪽으로 한칸 이동시킨다
+   
+   e, 스페이스바 : 블럭을 아래쪽으로 떨군다
+   
+   p : 게임을 일시정지한다
+   
+   m : 배경음악을 키고 끈다
+   
+   
+   -기본, AI, MINI 모드에서는 방향키와 a,w,s,d, space로 블럭 조작
+   
+   -two hands 모드에서는 awsd와 e, 방향키와 space를 통해 각각의 블럭을 조작
+
+
+
 
 
 ## 추가 설명
